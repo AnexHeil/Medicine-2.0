@@ -1,0 +1,21 @@
+.nav-item{
+    border-bottom: 1px #343a40 solid;
+}
+.nav-item:hover{
+    border-bottom: 1px white solid;
+    color: white;
+}
+.dropdown-menu{
+    min-width: 300px;
+}
+.dropdown-item{
+    padding-left: 1rem;
+}
+.container{
+    margin-top: 100px;
+}
+.nav-p{
+    margin: 0;
+    padding: 8px;
+    color: white;
+}

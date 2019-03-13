@@ -1,0 +1,38 @@
+<form action="/students" method="POST">
+    <div class="form-group">
+        <label for="studentNumber">Номер студенческого билета</label>
+        <input type="text" name="studentNumber" class="form-control" value="{{studentNumber}}" autofocus required>
+    </div>
+    <div class="form-group">
+        <label for="lastName">Фамилия</label>
+        <input type="text" name="lastName" class="form-control" value="{{lastName}}" required>
+    </div>
+    <div class="form-group">
+        <label for="firstName">Имя</label>
+        <input type="text" name="firstName" class="form-control" value="{{firstName}}" required>
+    </div>
+    <div class="form-group">
+        <label for="patronymic">Отчество</label>
+        <input type="text" name="patronymic" class="form-control" value="{{patronymic}}" required>
+    </div>
+    <div class="form-group">
+        <label for="group">Номер группы</label>
+        <input type="text" name="group" class="form-control" value="{{group}}" required>
+    </div>
+    <div class="form-group">
+        <label for="birthDate">Дата рождения</label>
+        <input type="date" name="birthDate" class="form-control" required>
+    </div>
+    <div class="form-group">
+        <label for="sex">Пол</label>
+        <div class="radios">
+            <label>Муж</label>
+            <input type="radio" id="man" name="sex" class="radio" value="Муж" checked>
+            <label>Жен</label>
+            <input type="radio" name="sex" class="radio" value="Жен">
+        </div>
+    </div>
+    <div class="form-group">
+        <input class="form-control btn btn-lg btn-primary" type="submit" value="Готово">
+    </div>
+</form>

@@ -7,9 +7,15 @@ const flash = require('connect-flash');
 const passport = require('passport');
 const app = express();
 
-
+require('./models/User');
+require('./models/Student');
 const users = require('./routes/users');
+const students = require('./routes/students');
 require('./config/passport')(passport);
+
+const {
+    formatDate
+} = require('./heplers/hbs');
 
 mongoose.connect('mongodb://Heil:135928a@ds163835.mlab.com:63835/medicine-dev', { useNewUrlParser: true })
     .then(() => {
@@ -17,7 +23,9 @@ mongoose.connect('mongodb://Heil:135928a@ds163835.mlab.com:63835/medicine-dev', 
     })
     .catch((err) => console.log(err));;
 
-app.engine('handlebars', exhbs({ defaultLayout: 'main' }));
+app.engine('handlebars', exhbs({ defaultLayout: 'main', helpers: {
+    formatDate: formatDate
+}}));
 app.set('view engine', 'handlebars');
 
 app.use(express.static(__dirname + '/public'));
@@ -46,6 +54,7 @@ app.get('/', (req, res) => {
 })
 
 app.use('/users', users);
+app.use('/students', students);
 const port = process.env.port || 3000;
 app.listen(port, () => {
     console.log('Server started at ' + port + '!');

@@ -19,3 +19,18 @@
     padding: 8px;
     color: white;
 }
+.radio{
+    transform: scale(1.5);
+    margin: 0 10px;
+}
+.table-column-header{
+    cursor: pointer;
+}
+.table .thead-dark th.table-column-header:hover{
+    background-color: #0069d9;
+    border-color: #007bff;
+}
+.arrow{
+    float: right;
+    margin-top: 5.5px;
+}

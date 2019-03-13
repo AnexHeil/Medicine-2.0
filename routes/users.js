@@ -7,7 +7,7 @@ require('../models/User');
 const User = mongoose.model('users');
 
 router.get('/login', (req, res) => {
-    res.render('login');
+    res.render('users/login');
 });
 
 router.post('/login', (req, res, next) => {
@@ -21,7 +21,7 @@ router.post('/login', (req, res, next) => {
 
 
 router.get('/register', (req, res) => {
-    res.render('register');
+    res.render('users/register');
 });
 
 router.post('/register', (req, res) => {
@@ -33,7 +33,7 @@ router.post('/register', (req, res) => {
         errors.push({ text: 'Пароли не совпадают' });
     }
     if (errors.length > 0) {
-        res.render('register', {
+        res.render('users/register', {
             firstName: req.body.firstName,
             lastName: req.body.lastName,
             username: req.body.username,
@@ -45,8 +45,8 @@ router.post('/register', (req, res) => {
         User.findOne({ username: req.body.username })
             .then(user => {
                 if (user) {
-                    errors.push({ text: 'Такой ползьователь уже существует.' });
-                    res.render('register', {
+                    errors.push({ text: 'Такой пользователь уже существует.' });
+                    res.render('users/register', {
                         firstName: req.body.firstName,
                         lastName: req.body.lastName,
                         username: req.body.username,

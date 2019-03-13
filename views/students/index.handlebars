@@ -1,0 +1,26 @@
+<table class="table table-bordered table-hover table-sm">
+    <thead class="thead-dark">
+        <tr>
+            <th class="table-column-header">Номер студ. билета <i class="arrow fa fa-sort"></i></th>
+            <th class="table-column-header">Фамилия <i class="arrow fa fa-sort"></i></th>
+            <th class="table-column-header">Имя <i class="arrow fa fa-sort"></i></th>
+            <th class="table-column-header">Отчество <i class="arrow fa fa-sort"></i></th>
+            <th class="table-column-header">Группа <i class="arrow fa fa-sort"></i></th>
+            <th class="table-column-header">Дата рождения <i class="arrow fa fa-sort"></i></th>
+            <th class="table-column-header">Пол <i class="arrow fa fa-sort"></i></th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#each students}}
+        <tr>
+            <td>{{studentNumber}}</td>
+            <td>{{lastName}}</td>
+            <td>{{firstName}}</td>
+            <td>{{patronymic}}</td>
+            <td>{{group}}</td>
+            <td>{{formatDate birthDate 'MMM do Y'}}</td>
+            <td>{{sex}}</td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>

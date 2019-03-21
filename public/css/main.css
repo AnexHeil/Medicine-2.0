@@ -23,14 +23,36 @@
     transform: scale(1.5);
     margin: 0 10px;
 }
+.table-responsive{
+    overflow-y: auto;
+}
 .table-column-header{
     cursor: pointer;
+    user-select: none;
+    white-space: nowrap;
 }
 .table .thead-dark th.table-column-header:hover{
     background-color: #0069d9;
     border-color: #007bff;
 }
+.table-responsive .arrow{
+  margin-left: 7px;
+  float: none;
+}
 .arrow{
     float: right;
     margin-top: 5.5px;
+}
+
+.inline-form{
+    display: inline-block;
+    widows: 50%;
+}
+.btn-xs{
+    max-height: 32px;
+    padding: 0 5px;
+}
+.operations{
+    width:170px;
+    max-width: 170px;
 }

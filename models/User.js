@@ -16,11 +16,9 @@ const UserSchema = new Schema({
         type: String,
         required: true
     },
-    studentNumber: {
-        type: String
-    },
     status: {
-        type: String
+        type: String,
+        required: true
     }
 });
 mongoose.model('users', UserSchema);

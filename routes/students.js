@@ -1,13 +1,17 @@
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
+const bcrypt = require('bcryptjs');
+const {ensureAuthenticated} = require('../heplers/auth');
 require('../models/Student');
+require('../models/User');
 const Student = mongoose.model('students');
+const User = mongoose.model('users');
 
-router.get('/', (req, res) => {
+router.get('/', ensureAuthenticated, (req, res) => {
     Student.find()
         .then(students => {
-            res.render('students/index', {students: students});
+            res.render('students/index', { students: students });
         })
         .catch(err => {
             req.flash('error_msg', `Возникла критическая ошибка. Попробуйте повторить операцию позже.`);
@@ -16,11 +20,11 @@ router.get('/', (req, res) => {
 });
 
 
-router.get('/add', (req, res) => {
+router.get('/add', ensureAuthenticated, (req, res) => {
     res.render('students/add');
 });
 
-router.post('/', async (req, res) => {
+router.post('/', ensureAuthenticated, async (req, res) => {
     let errors = [];
     if (req.body.group.length < 4) {
         errors.push({ text: 'Номер группы должен быть не короче 4-х символов.' });
@@ -32,7 +36,7 @@ router.post('/', async (req, res) => {
     await Student.findOne({ studentNumber: req.body.studentNumber })
         .then(student => {
             if (student) {
-                errors.push({ text: 'Указанный студент уже зарегестрирован. Пожалуйста, проверьте правильность номера студ. билета' });
+                errors.push({ text: 'Указанный студент уже зарегестрирован. Пожалуйста, проверьте правильность номера студ. билета.' });
             }
         });
     if (errors.length > 0) {
@@ -57,8 +61,31 @@ router.post('/', async (req, res) => {
             sex: req.body.sex
         })
             .then(student => {
-                req.flash('success_msg', `Студент № ${req.body.studentNumber} успешно зарегестрирован`);
-                res.redirect('/students');
+                bcrypt.genSalt(10, (err, salt) => {
+                    bcrypt.hash(student.studentNumber, salt, (err, hash) => {
+                        if (err) {
+                            console.log(err);
+                        }
+                        else {
+                            const password = hash;
+                            User.create({
+                                username: student.studentNumber,
+                                firstName: student.firstName,
+                                lastName: student.lastName,
+                                password: password,
+                                status: 'student'
+                            })
+                                .then(student => {
+                                    req.flash('success_msg', `Студент № ${req.body.studentNumber} успешно зарегестрирован.`);
+                                    res.redirect('/students');
+                                })
+                                .catch(err => {
+                                    req.flash('error_msg', `Возникла критическая ошибка. Попробуйте повторить операцию позже.`);
+                                    res.redirect('/students');
+                                });
+                        }
+                    });
+                })
             })
             .catch(err => {
                 req.flash('error_msg', `Возникла критическая ошибка. Попробуйте повторить операцию позже.`);
@@ -67,4 +94,33 @@ router.post('/', async (req, res) => {
     }
 });
 
+
+router.get('/:id/edit', ensureAuthenticated, (req, res) => {
+    Student.findById(req.params.id)
+        .then(student => {
+            if (student) {
+                res.render('students/edit', { student: student });
+            }
+            else {
+                req.flash('error_msg', `Студент не найден.`);
+                res.redirect('/students');
+            }
+        })
+        .catch(err => {
+            req.flash('error_msg', `Возникла критическая ошибка. Попробуйте повторить операцию позже.`);
+            res.redirect('/students');
+        });
+});
+
+router.delete('/:id', ensureAuthenticated, (req, res) => {
+    Student.findByIdAndDelete(req.params.id)
+        .then(student => {
+            req.flash('success_msg', `Студент № ${student.studentNumber} успешно удалён.`);
+            res.redirect('/students');
+        })
+        .catch(err => {
+            req.flash('error_msg', `Возникла критическая ошибка. Попробуйте повторить операцию позже.`);
+            res.redirect('/students');
+        });
+})
 module.exports = router;

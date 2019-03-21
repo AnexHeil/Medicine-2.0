@@ -21,15 +21,15 @@
     </div>
     <div class="form-group">
         <label for="birthDate">Дата рождения</label>
-        <input type="date" name="birthDate" class="form-control" required>
+        <input type="date" name="birthDate" class="form-control" value="{{formatDate birthDate 'YYYY-MM-DD'}}" required>
     </div>
     <div class="form-group">
         <label for="sex">Пол</label>
         <div class="radios">
             <label>Муж</label>
-            <input type="radio" id="man" name="sex" class="radio" value="Муж" checked>
+            <input type="radio" id="man" name="sex" class="radio" value="Муж" {{checkSex sex 'Муж'}}>
             <label>Жен</label>
-            <input type="radio" name="sex" class="radio" value="Жен">
+            <input type="radio" name="sex" class="radio" value="Жен" {{checkSex sex 'Жен'}}>
         </div>
     </div>
     <div class="form-group">

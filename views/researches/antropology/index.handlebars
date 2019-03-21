@@ -1,0 +1,54 @@
+<div class="table-responsive">
+
+
+    <table class="table table-bordered table-hover table-sm">
+        <thead class="thead-dark">
+            <tr>
+                <th class="table-column-header">Фамилия <i class="arrow fa fa-sort"></i></th>
+                <th class="table-column-header">Имя <i class="arrow fa fa-sort"></i></th>
+                <th class="table-column-header">Отчество <i class="arrow fa fa-sort"></i></th>
+                <th class="table-column-header">Номер студ. билета <i class="arrow fa fa-sort"></i></th>
+                <th class="table-column-header">Группа <i class="arrow fa fa-sort"></i></th>
+                <th class="table-column-header">Рост стоя <i class="arrow fa fa-sort"></i></th>
+                <th class="table-column-header">Рост сидя <i class="arrow fa fa-sort"></i></th>
+                <th class="table-column-header">Размах рук <i class="arrow fa fa-sort"></i></th>
+                <th class="table-column-header">Вес <i class="arrow fa fa-sort"></i></th>
+                <th class="table-column-header">Объём грудной клетки в покое <i class="arrow fa fa-sort"></i></th>
+                <th class="table-column-header">Объём грудной клетки при полн. вдохе <i class="arrow fa fa-sort"></i>
+                </th>
+                <th class="table-column-header">Объём грудной клетки при макс. вдохе <i class="arrow fa fa-sort"></i>
+                </th>
+                <th class="table-column-header">Дата обследования <i class="arrow fa fa-sort"></i></th>
+                <th colspan="2" class="operations">Операции</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each researches}}
+            <tr>
+                <td>{{student.lastName}}</td>
+                <td>{{student.firstName}}</td>
+                <td>{{student.patronymic}}</td>
+                <td>{{student.studentNumber}}</td>
+                <td>{{student.group}}</td>
+                <td>{{stayHeight}}</td>
+                <td>{{sitHeight}}</td>
+                <td>{{handWidth}}</td>
+                <td>{{weight}}</td>
+                <td>{{chestOnBreath}}</td>
+                <td>{{chestOnFullBreath}}</td>
+                <td>{{chestOnMaxBreath}}</td>
+                <td>{{formatDate researchDate 'DD-MM-YYYY'}}</td>
+
+                <td>
+                    <a class="btn btn-xs btn-warning" href="/students/{{_id}}/edit">Изменить</a>
+                </td>
+                <td class="delete-td">
+                    <form class="inline-form" action="/students/{{_id}}?_method=DELETE" method="POST">
+                        <button class="btn btn-xs btn-danger">Удалить</button>
+                    </form>
+                </td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</div>

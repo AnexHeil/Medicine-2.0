@@ -8,6 +8,7 @@
             <th class="table-column-header">Группа <i class="arrow fa fa-sort"></i></th>
             <th class="table-column-header">Дата рождения <i class="arrow fa fa-sort"></i></th>
             <th class="table-column-header">Пол <i class="arrow fa fa-sort"></i></th>
+            <th class= "operations">Операции</th>
         </tr>
     </thead>
     <tbody>
@@ -18,8 +19,14 @@
             <td>{{firstName}}</td>
             <td>{{patronymic}}</td>
             <td>{{group}}</td>
-            <td>{{formatDate birthDate 'MMM do Y'}}</td>
+            <td>{{formatDate birthDate 'DD-MM-YYYY'}}</td>
             <td>{{sex}}</td>
+            <td>
+                <a class="btn btn-xs btn-warning" href="/students/{{_id}}/edit">Изменить</a>
+                <form class="inline-form" action="/students/{{_id}}?_method=DELETE" method="POST">
+                    <button class="btn btn-xs btn-danger">Удалить</button>
+                </form>
+            </td>
         </tr>
         {{/each}}
     </tbody>

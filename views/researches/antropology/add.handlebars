@@ -1,0 +1,41 @@
+<form action="/antropology" method="POST">
+    <div class="form-group">
+        <label for="studentNumber">Номер студенческого билета осбледуемого</label>
+        <input type="text" name="studentNumber" class="form-control" value="" autofocus required>
+    </div>
+    <div class="form-group">
+        <label for="stayHeight">Рост стоя</label>
+        <input type="text" name="stayHeight" class="form-control" value="{{stayHeight}}" required>
+    </div>
+    <div class="form-group">
+        <label for="sitHeight">Рост сидя</label>
+        <input type="text" name="sitHeight" class="form-control" value="{{sitHeight}}" required>
+    </div>
+    <div class="form-group">
+        <label for="handWidth">Размах рук</label>
+        <input type="text" name="handWidth" class="form-control" value="{{handWidth}}" required>
+    </div>
+    <div class="form-group">
+        <label for="weight">Вес</label>
+        <input type="text" name="weight" class="form-control" value="{{weight}}" required>
+    </div>
+    <div class="form-group">
+        <label for="chestOnBreath">Объём грудной клетки в покое</label>
+        <input type="text" name="chestOnBreath" class="form-control" value="{{chestOnBreath}}" required>
+    </div>
+    <div class="form-group">
+        <label for="chestOnFullBreath">Объём грудной клетки при полном вдохе</label>
+        <input type="text" name="chestOnFullBreath" class="form-control" value="{{chestOnFullBreath}}" required>
+    </div>
+    <div class="form-group">
+        <label for="chestOnMaxBreath">Объём грудной клетки при макс. вдохе</label>
+        <input type="text" name="chestOnMaxBreath" class="form-control" value="{{chestOnMaxBreath}}" required>
+    </div>
+    <div class="form-group">
+        <label for="researchDate">Дата проведения обследования</label>
+        <input type="date" name="researchDate" class="form-control" value= "{{formatDate researchDate "YYYY-MM-DD"}}" required>
+    </div>
+    <div class="form-group">
+        <input class="form-control btn btn-lg btn-primary" type="submit" value="Готово">
+    </div>
+</form>

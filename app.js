@@ -5,16 +5,20 @@ const bodyParser = require('body-parser');
 const session = require('express-session');
 const flash = require('connect-flash');
 const passport = require('passport');
+const methodOverride = require('method-override');
 const app = express();
 
 require('./models/User');
 require('./models/Student');
+require('./models/Antropology');
 const users = require('./routes/users');
 const students = require('./routes/students');
+const antropology = require('./routes/researches/antropology');
 require('./config/passport')(passport);
 
 const {
-    formatDate
+    formatDate,
+    checkSex
 } = require('./heplers/hbs');
 
 mongoose.connect('mongodb://Heil:135928a@ds163835.mlab.com:63835/medicine-dev', { useNewUrlParser: true })
@@ -24,7 +28,8 @@ mongoose.connect('mongodb://Heil:135928a@ds163835.mlab.com:63835/medicine-dev', 
     .catch((err) => console.log(err));;
 
 app.engine('handlebars', exhbs({ defaultLayout: 'main', helpers: {
-    formatDate: formatDate
+    formatDate: formatDate,
+    checkSex: checkSex
 }}));
 app.set('view engine', 'handlebars');
 
@@ -40,7 +45,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
 
-
+app.use(methodOverride('_method'));
 
 app.use(function(req, res, next){
     res.locals.success_msg = req.flash('success_msg');
@@ -55,7 +60,12 @@ app.get('/', (req, res) => {
 
 app.use('/users', users);
 app.use('/students', students);
+
+//research routes
+app.use('/antropology', antropology);
+
+
 const port = process.env.port || 3000;
 app.listen(port, () => {
-    console.log('Server started at ' + port + '!');
+    console.log('Server started at port' + port + '!');
 });

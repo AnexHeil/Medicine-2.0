@@ -25,6 +25,7 @@
 }
 .table-responsive{
     overflow-y: auto;
+    margin-top: 10px;
 }
 .table-column-header{
     cursor: pointer;
@@ -55,4 +56,30 @@
 .operations{
     width:170px;
     max-width: 170px;
+}
+
+.tooltipes {
+      position: fixed;
+      padding: 5px 10px;
+      /* красивости... */
+
+      border: 1px solid #212529;
+      border-radius: 4px;
+      text-align: center;
+      color: #333;
+      background: #fff;
+      /* box-shadow: 3px 3px 3px rgba(0, 0, 0, .3); */
+}
+.add-button{
+    position: absolute;
+    font-size: 4em;
+    /* color: white;
+    background:  #007bff; */
+    border: none;
+    /* border-radius: 50%; */
+    right: 0.8%;
+    top: 9.3%;
+
+    text-decoration: none;
+    color: #343a40;
 }

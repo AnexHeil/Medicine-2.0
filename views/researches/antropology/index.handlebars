@@ -1,22 +1,20 @@
 <div class="table-responsive">
-
-
     <table class="table table-bordered table-hover table-sm">
         <thead class="thead-dark">
             <tr>
                 <th class="table-column-header">Фамилия <i class="arrow fa fa-sort"></i></th>
                 <th class="table-column-header">Имя <i class="arrow fa fa-sort"></i></th>
                 <th class="table-column-header">Отчество <i class="arrow fa fa-sort"></i></th>
-                <th class="table-column-header">Номер студ. билета <i class="arrow fa fa-sort"></i></th>
+                <th class="table-column-header">№ студ. билета <i class="arrow fa fa-sort"></i></th>
                 <th class="table-column-header">Группа <i class="arrow fa fa-sort"></i></th>
                 <th class="table-column-header">Рост стоя <i class="arrow fa fa-sort"></i></th>
                 <th class="table-column-header">Рост сидя <i class="arrow fa fa-sort"></i></th>
                 <th class="table-column-header">Размах рук <i class="arrow fa fa-sort"></i></th>
                 <th class="table-column-header">Вес <i class="arrow fa fa-sort"></i></th>
-                <th class="table-column-header">Объём грудной клетки в покое <i class="arrow fa fa-sort"></i></th>
-                <th class="table-column-header">Объём грудной клетки при полн. вдохе <i class="arrow fa fa-sort"></i>
+                <th data-tooltip = "Объём грудной клетки при вдохе" class="table-column-header helper">ОГК<i class="arrow fa fa-sort"></i></th>
+                <th data-tooltip = "Объём грудной клетки при полном вдохе"class="table-column-header helper">ОГК полн.<i class="arrow fa fa-sort"></i>
                 </th>
-                <th class="table-column-header">Объём грудной клетки при макс. вдохе <i class="arrow fa fa-sort"></i>
+                <th data-tooltip = "Объём грудной клетки при макс. вдохе" class="table-column-header helper">ОГК макс.<i class="arrow fa fa-sort"></i>
                 </th>
                 <th class="table-column-header">Дата обследования <i class="arrow fa fa-sort"></i></th>
                 <th colspan="2" class="operations">Операции</th>
@@ -51,4 +49,5 @@
             {{/each}}
         </tbody>
     </table>
+    <a href = "/antropology/add" class = "add-button"><i data-tooltip="Добавить обследование" class = "fa fa-plus-circle"></i></a>
 </div>

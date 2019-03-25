@@ -5,30 +5,46 @@ require('../../models/Antropology');
 const Antropology = mongose.model('antropologyResearches');
 require('../../models/Student');
 const Student = mongose.model('students');
-
-const { ensureAuthenticated } = require('../../heplers/auth');
-
+const { searchResearches, formGroups } = require('../../heplers/search');
+const { ensureAuthenticated} = require('../../heplers/auth');
+let searchParams;
 router.get('/add', ensureAuthenticated, (req, res) => {
     res.render('researches/antropology/add');
 });
 
-router.get('/', (req, res)=>{
-    Antropology.find({})
-        .populate('student')
-        .then(researches =>{
-            res.render('researches/antropology/index', {researches: researches});
-        })
-        .catch(err => {
-            console.log(err);
-            req.flash('error_msg', `Возникла критическая ошибка. Попробуйте повторить операцию позже.`);
-            res.redirect('/');
-        })
+router.get('/', (req, res) => {
+    Student.find({})
+        .then(students => {
+            const groups = formGroups(students);
+            Antropology.find({})
+                .populate('student')
+                .then(researches => {
+                    if (searchParams) {
+                        result = searchResearches(researches, searchParams);
+                        searchParams = undefined;
+                        res.render('researches/antropology/index', { researches: result, students: students, groups: groups, way: '/antropology/search' });
+                    }
+                    else {
+                        res.render('researches/antropology/index', { researches: researches, students: students, groups: groups, way: '/antropology/search' });
+                    }
+                })
+                .catch(err => {
+                    console.log(err);
+                    req.flash('error_msg', `Возникла критическая ошибка. Попробуйте повторить операцию позже.`);
+                    res.redirect('/');
+                })
+        });
 });
+
+router.post('/search', (req, res) => {
+    searchParams = req.body;
+    res.redirect('/antropology');
+})
 
 router.post('/', ensureAuthenticated, async (req, res) => {
     let errors = [];
     await Student.findOne({ studentNumber: req.body.studentNumber })
-        .then(async function(student){
+        .then(async function (student) {
             if (student) {
                 let studentID = student._id;
                 await Antropology.findOne({ researchDate: req.body.researchDate, studentID: studentID })

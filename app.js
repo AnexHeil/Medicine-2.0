@@ -20,7 +20,6 @@ const {
     formatDate,
     checkSex
 } = require('./heplers/hbs');
-
 mongoose.connect('mongodb://Heil:135928a@ds163835.mlab.com:63835/medicine-dev', { useNewUrlParser: true })
     .then(() => {
         console.log('MongoDB connected');

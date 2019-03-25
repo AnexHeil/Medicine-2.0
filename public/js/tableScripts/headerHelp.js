@@ -20,9 +20,6 @@ headers.forEach(function(header) {
         tooltipDiv.style.top = top + 'px';
 
         showingTooltip = tooltipDiv;
-        if(showingTooltip){
-            console.log(showingTooltip);
-        }
     });
     header.addEventListener('mouseout', function(e){
         if (showingTooltip) {

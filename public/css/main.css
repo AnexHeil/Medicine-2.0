@@ -47,7 +47,6 @@
 
 .inline-form{
     display: inline-block;
-    widows: 50%;
 }
 .btn-xs{
     max-height: 32px;
@@ -82,4 +81,42 @@
 
     text-decoration: none;
     color: #343a40;
+}
+.search-button{
+    background: none;
+    border: none;
+    position: absolute;
+    left: 0.8%;
+    top: 10%;
+    color: #343a40;
+    font-size: 1.5em;
+}
+.search-button:hover{
+    background: #343a40;
+    color: white;
+    user-select: none;
+}
+.dashboard{
+    position: absolute;
+    top: 15%;
+    left: 0.8%;
+    margin-top: 5px;
+    z-index: 2000;
+    transform: translateX(-600px);
+    min-width: 500px;
+    background: white;
+    border: 1px #343a40 solid;
+    border-radius: 2%;
+    padding: 10px;
+    transition: 0.5s;
+}
+.full-btn{
+    width: 100%;
+}
+.active-search{
+    transform: translateX(0);
+}
+
+.custom-select{
+    margin-top: 5px;
 }

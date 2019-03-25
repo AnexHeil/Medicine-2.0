@@ -1,0 +1,36 @@
+<button class="search-button"><i class="fa fa-bars"></i></button>
+<div class="dashboard">
+    <h3>Поиск</h3>
+    <form action="{{way}}" method="POST">
+        <div class="form-group">
+            <label for="studentSearch">Студенты: </label>
+            <input class="form-control" type="text" name="studentSearch">
+            <select data-name="studentSearch" class="custom-select">
+                <option value="header" selected>Выберите студента</option>
+                {{#each students}}
+                <option class="search-option" value="{{studentNumber}}">{{lastName}}
+                    {{firstName}} {{patronymic}} {{studentNumber}}</option>
+                {{/each}}
+            </select>
+        </div>
+        <hr>
+        <div class="form-group">
+            <label for="groupSearch">Группы: </label>
+            <input class="form-control" type="text" name="groupSearch">
+            <select data-name="groupSearch" class="custom-select">
+                <option value="header" selected>Выберите группу</option>
+                {{#each groups}}
+                <option class="search-option" value="{{title}}">{{title}}</option>
+                {{/each}}
+            </select>
+        </div>
+        <hr>
+        <div class="form-group">
+            <label for="dateSearch">Поиск по дате</label>
+            <input class="form-control" type="date" name="dateSearch">
+        </div>
+        <button class="full-btn btn btn-primary btn-lg">Найти соответствия</button>
+    </form>
+</div>
+<script src="/js/tableScripts/showSearchMenu.js"></script>
+<script src="/js/tableScripts/selectOption.js"></script>

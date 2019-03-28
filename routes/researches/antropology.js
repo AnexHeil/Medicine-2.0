@@ -5,20 +5,23 @@ require('../../models/Antropology');
 const Antropology = mongose.model('antropologyResearches');
 require('../../models/Student');
 const Student = mongose.model('students');
-const { searchResearches, formGroups } = require('../../heplers/search');
-const { ensureAuthenticated} = require('../../heplers/auth');
+const { searchResearches, formGroups, formForStudent } = require('../../heplers/search');
+const { ensureAuthenticated, ensureUser } = require('../../heplers/auth');
 let searchParams;
-router.get('/add', ensureAuthenticated, (req, res) => {
+router.get('/add', ensureAuthenticated, ensureUser, (req, res) => {
     res.render('researches/antropology/add');
 });
 
-router.get('/', (req, res) => {
+router.get('/', ensureAuthenticated, (req, res) => {
     Student.find({})
         .then(students => {
             const groups = formGroups(students);
             Antropology.find({})
                 .populate('student')
                 .then(researches => {
+                    if (req.user.status == 'student') {
+                        researches = formForStudent(req.user.username, researches);
+                    }
                     if (searchParams) {
                         result = searchResearches(researches, searchParams);
                         searchParams = undefined;
@@ -32,7 +35,7 @@ router.get('/', (req, res) => {
                     console.log(err);
                     req.flash('error_msg', `Возникла критическая ошибка. Попробуйте повторить операцию позже.`);
                     res.redirect('/');
-                })
+                });
         });
 });
 
@@ -41,10 +44,10 @@ router.post('/search', (req, res) => {
     res.redirect('/antropology');
 })
 
-router.post('/', ensureAuthenticated, async (req, res) => {
+router.post('/', ensureAuthenticated, ensureUser, async (req, res) => {
     let errors = [];
     await Student.findOne({ studentNumber: req.body.studentNumber })
-        .then(async function (student) {
+        .then(async function(student) {
             if (student) {
                 let studentID = student._id;
                 await Antropology.findOne({ researchDate: req.body.researchDate, studentID: studentID })

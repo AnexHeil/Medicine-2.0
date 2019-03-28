@@ -2,13 +2,13 @@ const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
-const {ensureAuthenticated} = require('../heplers/auth');
+const {ensureAuthenticated, ensureUser} = require('../heplers/auth');
 require('../models/Student');
 require('../models/User');
 const Student = mongoose.model('students');
 const User = mongoose.model('users');
 
-router.get('/', ensureAuthenticated, (req, res) => {
+router.get('/', ensureAuthenticated, ensureUser, (req, res) => {
     Student.find()
         .then(students => {
             res.render('students/index', { students: students });
@@ -20,11 +20,11 @@ router.get('/', ensureAuthenticated, (req, res) => {
 });
 
 
-router.get('/add', ensureAuthenticated, (req, res) => {
+router.get('/add', ensureAuthenticated, ensureUser, (req, res) => {
     res.render('students/add');
 });
 
-router.post('/', ensureAuthenticated, async (req, res) => {
+router.post('/', ensureAuthenticated, ensureUser, async (req, res) => {
     let errors = [];
     if (req.body.group.length < 4) {
         errors.push({ text: 'Номер группы должен быть не короче 4-х символов.' });
@@ -95,7 +95,7 @@ router.post('/', ensureAuthenticated, async (req, res) => {
 });
 
 
-router.get('/:id/edit', ensureAuthenticated, (req, res) => {
+router.get('/:id/edit', ensureAuthenticated, ensureUser, (req, res) => {
     Student.findById(req.params.id)
         .then(student => {
             if (student) {
@@ -112,7 +112,7 @@ router.get('/:id/edit', ensureAuthenticated, (req, res) => {
         });
 });
 
-router.delete('/:id', ensureAuthenticated, (req, res) => {
+router.delete('/:id', ensureAuthenticated, ensureUser, (req, res) => {
     Student.findByIdAndDelete(req.params.id)
         .then(student => {
             req.flash('success_msg', `Студент № ${student.studentNumber} успешно удалён.`);

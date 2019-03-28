@@ -32,5 +32,13 @@ module.exports = {
             groups[i] = group;
         }
         return groups;
+    },
+    formForStudent: function(username, researches){
+        for(let i = 0; i < researches.length; i++){
+            if(researches[i].student.studentNumber != username){
+                researches.splice(i, 1);
+            }
+        }
+        return researches;
     }
 }

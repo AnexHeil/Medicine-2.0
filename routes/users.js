@@ -5,10 +5,15 @@ const bcrypt = require('bcryptjs');
 const passport = require('passport');
 require('../models/User');
 const User = mongoose.model('users');
+const keys = require('../config/keys');
 
 router.get('/login', (req, res) => {
     res.render('users/login');
 });
+router.get('/logout', (req, res) =>{
+    req.logout();
+    res.redirect('/');
+})
 
 router.post('/login', (req, res, next) => {
     passport.authenticate('local', {
@@ -46,7 +51,12 @@ router.post('/register', (req, res) => {
             .then(user => {
                 if (user) {
                     errors.push({ text: 'Такой пользователь уже существует.' });
-                    res.render('users/register', {
+                }
+                if (keys.indexOf(req.body.key) != -1) {
+                    errors.push({ text: 'Ключ регистрации указан неверно. Пожалуйста, убедитесь, что имеете верный ключ' });
+                }
+                if(errors.length > 0){
+                     res.render('users/register', {
                         firstName: req.body.firstName,
                         lastName: req.body.lastName,
                         username: req.body.username,

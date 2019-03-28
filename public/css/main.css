@@ -120,3 +120,29 @@
 .custom-select{
     margin-top: 5px;
 }
+
+.logo-img{
+    font-size: 20em;
+    text-align: center;
+}
+.logo-header{
+    font-size: 3em;
+    text-align: center;
+}
+.logo-container{
+    margin-top: 20px;
+    width: 100%;
+    text-align: center;
+}
+.logo-container a{
+    width: 60%;
+    margin: 10px 0;
+    /* display: inline-block;
+    text-align: center; */
+}
+/* .logo-register{
+    margin-right: 1%;
+}
+.logo-login{
+    margin-left: 1%;
+} */

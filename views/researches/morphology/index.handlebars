@@ -1,0 +1,77 @@
+{{>_dashboard}}
+{{>_add}}
+<div class="table-responsive">
+    <table class="table table-bordered table-hover table-sm">
+        <thead class="thead-dark">
+            <tr>
+                <th class="table-column-header">Фамилия <i class="arrow fa fa-sort"></i></th>
+                <th class="table-column-header">Имя <i class="arrow fa fa-sort"></i></th>
+                <th class="table-column-header">Отчество <i class="arrow fa fa-sort"></i></th>
+                <th class="table-column-header">№ студ. билета <i class="arrow fa fa-sort"></i></th>
+                <th class="table-column-header">Группа <i class="arrow fa fa-sort"></i></th>
+                <th class="table-column-header">Высота лица <i class="arrow fa fa-sort"></i></th>
+                <th class="table-column-header">Скуловоя ширина <i class="arrow fa fa-sort"></i></th>
+                <th class="table-column-header">Длина кисти (П) <i class="arrow fa fa-sort"></i></th>
+                <th class="table-column-header">Длина кисти (Л)  <i class="arrow fa fa-sort"></i></th>
+                <th data-tooltip ="Тест среднего пальца правой руки" class="table-column-header helper">ТСП (П) <i class="arrow fa fa-sort"></i></th>
+                <th data-tooltip ="Тест среднего пальца правой руки" class="table-column-header helper">ТСП (П) <i class="arrow fa fa-sort"></i></th>
+                <th data-tooltip ="Тест большого пальца правой руки" class="table-column-header helper">ТБП (П) <i class="arrow fa fa-sort"></i></th>
+                <th data-tooltip ="Тест большого пальца левой руки" class="table-column-header helper">ТБП (Л) <i class="arrow fa fa-sort"></i></th>
+                <th class="table-column-header">Тест запястья (П) <i class="arrow fa fa-sort"></i></th>
+                <th class="table-column-header">Тест запястья (Л) <i class="arrow fa fa-sort"></i></th>
+                <th class="table-column-header">ТМП <i class="arrow fa fa-sort"></i></th>
+                <th class="table-column-header">ТМЛ <i class="arrow fa fa-sort"></i></th>
+                <th class="table-column-header">ТБППР <i class="arrow fa fa-sort"></i></th>
+                <th class="table-column-header">ТБПЛР <i class="arrow fa fa-sort"></i></th>
+                <th class="table-column-header">ПЛС <i class="arrow fa fa-sort"></i></th>
+                <th class="table-column-header">ЛЛС <i class="arrow fa fa-sort"></i></th>
+                <th class="table-column-header">ПКС <i class="arrow fa fa-sort"></i></th>
+                <th class="table-column-header">ЛКС <i class="arrow fa fa-sort"></i></th>
+                <th class="table-column-header">ТПП <i class="arrow fa fa-sort"></i></th>
+                <th class="table-column-header">Размер обуви <i class="arrow fa fa-sort"></i></th>
+                <th class="table-column-header">Дата обследования<i class="arrow fa fa-sort"></i></th>
+                <th colspan="2" class="operations">Операции</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each researches}}
+            <tr>
+                <td>{{student.lastName}}</td>
+                <td>{{student.firstName}}</td>
+                <td>{{student.patronymic}}</td>
+                <td>{{student.studentNumber}}</td>
+                <td>{{student.group}}</td>
+                <td>{{faceHeight}}</td>
+                <td>{{cheeckWidth}}</td>
+                <td>{{wristLengthRight}}</td>
+                <td>{{wristLengthLeft}}</td>
+                <td>{{middleFingerTestRight}}</td>
+                <td>{{middleFingerTestLeft}}</td>
+                <td>{{bigFingerTestRight}}</td>
+                <td>{{bigFingerTestLeft}}</td>
+                <td>{{wristTestRight}}</td>
+                <td>{{wristTestLeft}}</td>
+                <td>{{TMP}}</td>
+                <td>{{TML}}</td>
+                <td>{{TBPPR}}</td>
+                <td>{{TBPLR}}</td>
+                <td>{{PLS}}</td>
+                <td>{{LLS}}</td>
+                <td>{{PKS}}</td>
+                <td>{{LKS}}</td>
+                <td>{{TPP}}</td>
+                <td>{{legSize}}</td>
+                <td>{{formatDate researchDate 'DD-MM-YYYY'}}</td>
+                <td>
+                    <a class="btn btn-xs btn-warning" href="/morphology/{{_id}}/edit">Изменить</a>
+                </td>
+                <td class="delete-td">
+                    <form class="inline-form" action="/morphology/{{_id}}?_method=DELETE" method="POST">
+                        <button class="btn btn-xs btn-danger">Удалить</button>
+                    </form>
+                </td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</div>

@@ -1,4 +1,5 @@
 {{>_dashboard}}
+{{>_add}}
 <div class="table-responsive">
     <table class="table table-bordered table-hover table-sm">
         <thead class="thead-dark">
@@ -39,10 +40,10 @@
                 <td>{{formatDate researchDate 'DD-MM-YYYY'}}</td>
 
                 <td>
-                    <a class="btn btn-xs btn-warning" href="/students/{{_id}}/edit">Изменить</a>
+                    <a class="btn btn-xs btn-warning" href="/antropology/{{_id}}/edit">Изменить</a>
                 </td>
                 <td class="delete-td">
-                    <form class="inline-form" action="/students/{{_id}}?_method=DELETE" method="POST">
+                    <form class="inline-form" action="/antropology/{{_id}}?_method=DELETE" method="POST">
                         <button class="btn btn-xs btn-danger">Удалить</button>
                     </form>
                 </td>
@@ -50,5 +51,4 @@
             {{/each}}
         </tbody>
     </table>
-    <a href = "/antropology/add" class = "add-button"><i data-tooltip="Добавить обследование" class = "fa fa-plus-circle helper"></i></a>
 </div>

@@ -140,6 +140,20 @@
     /* display: inline-block;
     text-align: center; */
 }
+
+/* .third-width{
+    width: 30%;
+} */
+.flex-box{
+    display: flex;
+}
+.form-group{
+    margin-left:  5px;
+    margin-right: 5px;
+}
+.inline-div{
+    width: 100%;
+}
 /* .logo-register{
     margin-right: 1%;
 }

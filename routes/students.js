@@ -112,15 +112,5 @@ router.get('/:id/edit', ensureAuthenticated, ensureUser, (req, res) => {
         });
 });
 
-router.delete('/:id', ensureAuthenticated, ensureUser, (req, res) => {
-    Student.findByIdAndDelete(req.params.id)
-        .then(student => {
-            req.flash('success_msg', `Студент № ${student.studentNumber} успешно удалён.`);
-            res.redirect('/students');
-        })
-        .catch(err => {
-            req.flash('error_msg', `Возникла критическая ошибка. Попробуйте повторить операцию позже.`);
-            res.redirect('/students');
-        });
-})
+
 module.exports = router;

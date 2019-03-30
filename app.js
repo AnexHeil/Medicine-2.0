@@ -11,9 +11,11 @@ const app = express();
 require('./models/User');
 require('./models/Student');
 require('./models/Antropology');
+require('./models/Morphology');
 const users = require('./routes/users');
 const students = require('./routes/students');
 const antropology = require('./routes/researches/antropology');
+const morphology = require('./routes/researches/morphology');
 require('./config/passport')(passport);
 
 const {
@@ -62,6 +64,7 @@ app.use('/students', students);
 
 //research routes
 app.use('/antropology', antropology);
+app.use('/morphology', morphology);
 
 
 const port = process.env.port || 3000;

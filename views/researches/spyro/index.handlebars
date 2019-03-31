@@ -1,0 +1,43 @@
+{{>_dashboard}}
+{{>_add}}
+<div class="table-responsive">
+    <table class="table table-bordered table-hover table-sm">
+        <thead class="thead-dark">
+            <tr>
+                <th class="table-column-header">Фамилия <i class="arrow fa fa-sort"></i></th>
+                <th class="table-column-header">Имя <i class="arrow fa fa-sort"></i></th>
+                <th class="table-column-header">Отчество <i class="arrow fa fa-sort"></i></th>
+                <th class="table-column-header">№ студ. билета <i class="arrow fa fa-sort"></i></th>
+                <th class="table-column-header">Группа <i class="arrow fa fa-sort"></i></th>
+                <th class="table-column-header">ЖЕЛ (мл) <i class="arrow fa fa-sort"></i></th>
+                <th class="table-column-header">Становая сила (кг) <i class="arrow fa fa-sort"></i></th>
+                <th class="table-column-header">Сила кисти (кг) <i class="arrow fa fa-sort"></i></th>
+                <th class="table-column-header">Дата обследования <i class="arrow fa fa-sort"></i></th>
+                <th colspan="2" class="operations">Операции</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each researches}}
+            <tr>
+                <td>{{student.lastName}}</td>
+                <td>{{student.firstName}}</td>
+                <td>{{student.patronymic}}</td>
+                <td>{{student.studentNumber}}</td>
+                <td>{{student.group}}</td>
+                <td>{{jel}}</td>
+                <td>{{stanPower}}</td>
+                <td>{{wristPower}}</td>
+                <td>{{formatDate researchDate 'DD-MM-YYYY'}}</td>
+                <td>
+                    <a class="btn btn-xs btn-warning" href="/spyro/{{_id}}/edit">Изменить</a>
+                </td>
+                <td class="delete-td">
+                    <form class="inline-form" action="/spyro/{{_id}}?_method=DELETE" method="POST">
+                        <button class="btn btn-xs btn-danger">Удалить</button>
+                    </form>
+                </td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</div>

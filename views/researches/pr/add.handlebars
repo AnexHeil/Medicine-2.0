@@ -1,0 +1,26 @@
+<form action="/pr" method="POST">
+    <div class="form-group">
+        <label for="studentNumber">Номер студенческого билета осбледуемого</label>
+        <input type="text" name="studentNumber" class="form-control" value="" autofocus required>
+    </div>
+    <div class="form-group">
+        <label for="p0">Р<sub>0</sub></label>
+        <input type="text" name="research[p0]" class="form-control" value="{{research.p0}}" required>
+    </div>
+    <div class="form-group">
+        <label for="p1">Р<sub>1</sub></label>
+        <input type="text" name="research[p1]" class="form-control" value="{{research.p1}}" required>
+    </div>
+    <div class="form-group">
+        <label for="p2">Р<sub>2</sub></label>
+        <input type="text" name="research[p2]" class="form-control" value="{{research.p2}}" required>
+    </div>
+    <div class="form-group">
+        <label for="researchDate">Дата проведения обследования</label>
+        <input type="date" name="research[researchDate]" class="form-control"
+            value="{{formatDate research.researchDate "YYYY-MM-DD"}}" required>
+    </div>
+    <div class="form-group">
+        <input class="form-control btn btn-lg btn-primary" type="submit" value="Готово">
+    </div>
+</form>

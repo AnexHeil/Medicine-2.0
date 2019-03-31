@@ -12,11 +12,20 @@ require('./models/User');
 require('./models/Student');
 require('./models/Antropology');
 require('./models/Morphology');
+require('./models/ECG');
+require('./models/Spyro');
+require('./models/OP');
+require('./models/PR');
+require('./models/ShG');
 const users = require('./routes/users');
 const students = require('./routes/students');
 const antropology = require('./routes/researches/antropology');
 const morphology = require('./routes/researches/morphology');
 const ecg = require('./routes/researches/ecg');
+const spyro = require('./routes/researches/spyro');
+const op = require('./routes/researches/op');
+const shg = require('./routes/researches/shg');
+const pr = require('./routes/researches/pr');
 require('./config/passport')(passport);
 
 const {
@@ -67,6 +76,10 @@ app.use('/students', students);
 app.use('/antropology', antropology);
 app.use('/morphology', morphology);
 app.use('/ecg', ecg);
+app.use('/spyro', spyro);
+app.use('/shg', shg);
+app.use('/op', op);
+app.use('/pr', pr);
 
 
 const port = process.env.port || 3000;

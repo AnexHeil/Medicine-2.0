@@ -1,0 +1,55 @@
+{{>_dashboard}}
+{{>_add}}
+<div class="table-responsive">
+    <table class="table table-bordered table-hover table-sm">
+        <thead class="thead-dark">
+            <tr>
+                <th class="table-column-header">Фамилия <i class="arrow fa fa-sort"></i></th>
+                <th class="table-column-header">Имя <i class="arrow fa fa-sort"></i></th>
+                <th class="table-column-header">Отчество <i class="arrow fa fa-sort"></i></th>
+                <th class="table-column-header">№ студ. билета <i class="arrow fa fa-sort"></i></th>
+                <th class="table-column-header">Группа <i class="arrow fa fa-sort"></i></th>
+                <th class="table-column-header">Р<sub>0</sub> <i class="arrow fa fa-sort"></i></th>
+                <th class="table-column-header">САД<sub>0</sub> <i class="arrow fa fa-sort"></i></th>
+                <th class="table-column-header">ДАД<sub>0</sub> <i class="arrow fa fa-sort"></i></th>
+                <th class="table-column-header">Р<sub>1</sub> <i class="arrow fa fa-sort"></i></th>
+                <th class="table-column-header">САД<sub>1</sub> <i class="arrow fa fa-sort"></i></th>
+                <th class="table-column-header">ДАД<sub>1</sub> <i class="arrow fa fa-sort"></i></th>
+                <th class="table-column-header">P<sub>2</sub> <i class="arrow fa fa-sort"></i></th>
+                <th class="table-column-header">САД<sub>2</sub> <i class="arrow fa fa-sort"></i></th>
+                <th class="table-column-header">ДАД<sub>2</sub> <i class="arrow fa fa-sort"></i></th>
+                <th class="table-column-header">Дата обследования <i class="arrow fa fa-sort"></i></th>
+                <th colspan="2" class="operations">Операции</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each researches}}
+            <tr>
+                <td>{{student.lastName}}</td>
+                <td>{{student.firstName}}</td>
+                <td>{{student.patronymic}}</td>
+                <td>{{student.studentNumber}}</td>
+                <td>{{student.group}}</td>
+                <td>{{p0}}</td>
+                <td>{{sad0}}</td>
+                <td>{{dad0}}</td>
+                <td>{{p1}}</td>
+                <td>{{sad1}}</td>
+                <td>{{dad1}}</td>
+                <td>{{p2}}</td>
+                <td>{{sad2}}</td>
+                <td>{{dad2}}</td>
+                <td>{{formatDate researchDate 'DD-MM-YYYY'}}</td>
+                <td>
+                    <a class="btn btn-xs btn-warning" href="/ecg/{{_id}}/edit">Изменить</a>
+                </td>
+                <td class="delete-td">
+                    <form class="inline-form" action="/ecg/{{_id}}?_method=DELETE" method="POST">
+                        <button class="btn btn-xs btn-danger">Удалить</button>
+                    </form>
+                </td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</div>

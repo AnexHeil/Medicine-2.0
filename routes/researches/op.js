@@ -1,22 +1,22 @@
 const express = require('express');
 const router = express.Router();
 const mongose = require('mongoose');
-require('../../models/Morphology');
-const Morphology = mongose.model('morphologyResearches');
+require('../../models/OP');
+const OP = mongose.model('opResearches');
 require('../../models/Student');
 const Student = mongose.model('students');
 const { searchResearches, formGroups, formForStudent } = require('../../heplers/search');
 const { ensureAuthenticated, ensureUser } = require('../../heplers/auth');
 let searchParams;
 router.get('/add', ensureAuthenticated, ensureUser, (req, res) => {
-    res.render('researches/morphology/add');
+    res.render('researches/op/add');
 });
 
 router.get('/', ensureAuthenticated, (req, res) => {
     Student.find({})
         .then(students => {
             const groups = formGroups(students);
-            Morphology.find({})
+            OP.find({})
                 .populate('student')
                 .then(researches => {
                     if (req.user.status == 'student') {
@@ -25,10 +25,10 @@ router.get('/', ensureAuthenticated, (req, res) => {
                     if (searchParams) {
                         result = searchResearches(researches, searchParams);
                         searchParams = undefined;
-                        res.render('researches/morphology/index', { researches: result, students: students, groups: groups, way: '/morphology' });
+                        res.render('researches/op/index', { researches: result, students: students, groups: groups, way: '/op' });
                     }
                     else {
-                        res.render('researches/morphology/index', { researches: researches, students: students, groups: groups, way: '/morphology' });
+                        res.render('researches/op/index', { researches: researches, students: students, groups: groups, way: '/op' });
                     }
                 })
                 .catch(err => {
@@ -40,7 +40,7 @@ router.get('/', ensureAuthenticated, (req, res) => {
 });
 router.post('/search', (req, res) => {
     searchParams = req.body;
-    res.redirect('/morphology');
+    res.redirect('/op');
 });
 
 router.post('/', ensureAuthenticated, ensureUser, async (req, res) => {
@@ -50,24 +50,24 @@ router.post('/', ensureAuthenticated, ensureUser, async (req, res) => {
         .then(async function (student) {
             if (student) {
                 let studentID = student._id;
-                await Morphology.findOne({ researchDate: newResearch.researchDate, student: studentID })
+                await OP.findOne({ researchDate: newResearch.researchDate, student: studentID })
                     .then(research => {
                         if (research) {
                             errors.push({ text: 'Обследование этого студента в указанное время уже зарегестрированно.' });
                         }
                         else {
                             newResearch.student = studentID;
-                            Morphology.create(newResearch)
+                            OP.create(newResearch)
                                 .then(research => {
                                     req.flash('Исследование успешно зарегестрированно.')
-                                    res.redirect('/morphology');
+                                    res.redirect('/op');
                                 });
                         }
                     })
                     .catch(err => {
                         console.log(err);
                         req.flash('error_msg', `Возникла критическая ошибка. Попробуйте повторить операцию позже.`);
-                        res.redirect('/morphology');
+                        res.redirect('/op');
                     })
             }
             else {
@@ -77,21 +77,21 @@ router.post('/', ensureAuthenticated, ensureUser, async (req, res) => {
         .catch(err => {
             console.log(err);
             req.flash('error_msg', `Возникла критическая ошибка. Попробуйте повторить операцию позже.`);
-            res.redirect('/morphology');
+            res.redirect('/op');
         });
     if (errors.length > 0) {
-        res.render('researches/morphology/add', {errors: errors, research: newResearch });
+        res.render('researches/op/add', {errors: errors, research: newResearch });
     }
 });
 router.delete('/:id', ensureAuthenticated, ensureUser, (req, res) => {
-    Morphology.findByIdAndDelete(req.params.id)
+    OP.findByIdAndDelete(req.params.id)
         .then(research => {
             req.flash('success_msg', `Обследование успешно удалено.`);
-            res.redirect('/morphology');
+            res.redirect('/op');
         })
         .catch(err => {
             req.flash('error_msg', `Возникла критическая ошибка. Попробуйте повторить операцию позже.`);
-            res.redirect('/morphology');
+            res.redirect('/op');
         });
 })
 module.exports = router;

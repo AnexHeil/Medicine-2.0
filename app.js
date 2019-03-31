@@ -16,6 +16,7 @@ const users = require('./routes/users');
 const students = require('./routes/students');
 const antropology = require('./routes/researches/antropology');
 const morphology = require('./routes/researches/morphology');
+const ecg = require('./routes/researches/ecg');
 require('./config/passport')(passport);
 
 const {
@@ -65,6 +66,7 @@ app.use('/students', students);
 //research routes
 app.use('/antropology', antropology);
 app.use('/morphology', morphology);
+app.use('/ecg', ecg);
 
 
 const port = process.env.port || 3000;

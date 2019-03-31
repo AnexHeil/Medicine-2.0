@@ -1,0 +1,59 @@
+{{>_dashboard}}
+{{>_add}}
+<div class="table-responsive">
+    <table class="table table-bordered table-hover table-sm">
+        <thead class="thead-dark">
+            <tr>
+                <th class="table-column-header">Фамилия <i class="arrow fa fa-sort"></i></th>
+                <th class="table-column-header">Имя <i class="arrow fa fa-sort"></i></th>
+                <th class="table-column-header">Отчество <i class="arrow fa fa-sort"></i></th>
+                <th class="table-column-header">№ студ. билета <i class="arrow fa fa-sort"></i></th>
+                <th class="table-column-header">Группа <i class="arrow fa fa-sort"></i></th>
+                <th class="table-column-header">CSS <i class="arrow fa fa-sort"></i></th>
+                <th class="table-column-header">PR <i class="arrow fa fa-sort"></i></th>
+                <th class="table-column-header">QRS <i class="arrow fa fa-sort"></i></th>
+                <th class="table-column-header">QT <i class="arrow fa fa-sort"></i></th>
+                <th class="table-column-header">QTкор. <i class="arrow fa fa-sort"></i></th>
+                <th class="table-column-header">Axis <i class="arrow fa fa-sort"></i></th>
+                <th class="table-column-header">RV5 <i class="arrow fa fa-sort"></i></th>
+                <th class="table-column-header">SV1 <i class="arrow fa fa-sort"></i>
+                </th>
+                <th class="table-column-header">R+S <i class="arrow fa fa-sort"></i></th>
+                <th class="table-column-header">Примечание <i class="arrow fa fa-sort"></i></th>
+                <th class="table-column-header">Дата обследования <i class="arrow fa fa-sort"></i></th>
+                <th colspan="2" class="operations">Операции</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each researches}}
+            <tr>
+                <td>{{student.lastName}}</td>
+                <td>{{student.firstName}}</td>
+                <td>{{student.patronymic}}</td>
+                <td>{{student.studentNumber}}</td>
+                <td>{{student.group}}</td>
+                <td>{{CSS}}</td>
+                <td>{{PR}}</td>
+                <td>{{QRS}}</td>
+                <td>{{QT}}</td>
+                <td>{{QTcor}}</td>
+                <td>{{Axis}}</td>
+                <td>{{RV5}}</td>
+                <td>{{SV1}}</td>
+                <td>{{RS}}</td>
+                <td><span data-tooltip="{{Note}}" class="helper btn btn-xs btn-dark inline-div">Примечание</span></td>
+                <td>{{formatDate researchDate 'DD-MM-YYYY'}}</td>
+
+                <td>
+                    <a class="btn btn-xs btn-warning" href="/ecg/{{_id}}/edit">Изменить</a>
+                </td>
+                <td class="delete-td">
+                    <form class="inline-form" action="/ecg/{{_id}}?_method=DELETE" method="POST">
+                        <button class="btn btn-xs btn-danger">Удалить</button>
+                    </form>
+                </td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</div>

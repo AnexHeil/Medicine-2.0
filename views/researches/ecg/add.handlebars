@@ -1,0 +1,67 @@
+<form action="/ecg" method="POST">
+    <div class="flex-box">
+        <div class="inline-div">
+            <div class="form-group">
+                <label for="studentNumber">Номер студенческого билета осбледуемого</label>
+                <input type="text" name="studentNumber" class="form-control" value="" autofocus required>
+            </div>
+            <div class="form-group">
+                <label for="CSS">CSS</label>
+                <input type="text" name="research[CSS]" class="form-control" value="{{research.CSS}}" required>
+            </div>
+            <div class="form-group">
+                <label for="PR">PR</label>
+                <input type="text" name="research[PR]" class="form-control" value="{{research.PR}}" required>
+            </div>
+            <div class="form-group">
+                <label for="QRS">QRS</label>
+                <input type="text" name="research[QRS]" class="form-control" value="{{research.QRS}}"
+                    required>
+            </div>
+            <div class="form-group">
+                <label for="QT">QT</label>
+                <input type="text" name="research[QT]" class="form-control" value="{{research.QT}}"
+                    required>
+            </div>
+        </div>
+        <div class="inline-div">
+            <div class="form-group">
+                <label for="QTcor">QTкор</label>
+                <input type="text" name="research[QTcor]" class="form-control" value="{{research.QTcor}}" required>
+            </div>
+            <div class="form-group">
+                <label for="Axis">Axis</label>
+                <input type="text" name="research[Axis]" class="form-control"
+                    value="{{research.Axis}}" required>
+            </div>
+            <div class="form-group">
+                <label for="RV5">RV5</label>
+                <input type="text" name="research[RV5]" class="form-control"
+                    value="{{research.RV5}}" required>
+            </div>
+            <div class="form-group">
+                <label for="SV1">SV1</label>
+                <input type="text" name="research[SV1]" class="form-control"
+                    value="{{research.SV1}}" required>
+            </div>
+            <div class="form-group">
+                <label for="RS">R+S</label>
+                <input type="text" name="research[RS]" class="form-control"
+                    value="{{research.RS}}" required>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="Note">Примечание</label>
+        <input type="text" name="research[Note]" class="form-control" value="{{research.Note}}"
+            required>
+    </div>
+    <div class="form-group">
+        <label for="researchDate">Дата проведения обследования</label>
+        <input type="date" name="research[researchDate]" class="form-control"
+            value="{{formatDate research.researchDate "YYYY-MM-DD"}}" required>
+    </div>
+    <div class="form-group third-width">
+        <input class="form-control btn btn-lg btn-primary" type="submit" value="Готово">
+    </div>
+</form>

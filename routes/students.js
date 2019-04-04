@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
-const {ensureAuthenticated, ensureUser} = require('../heplers/auth');
+const { ensureAuthenticated, ensureUser } = require('../heplers/auth');
 require('../models/Student');
 require('../models/User');
 const Student = mongoose.model('students');
@@ -26,14 +26,14 @@ router.get('/add', ensureAuthenticated, ensureUser, (req, res) => {
 
 router.post('/', ensureAuthenticated, ensureUser, async (req, res) => {
     let errors = [];
-    if (req.body.group.length < 4) {
+    if (req.body.student.group.length < 4) {
         errors.push({ text: 'Номер группы должен быть не короче 4-х символов.' });
     }
-    const birthDate = new Date(req.body.birthDate);
+    const birthDate = new Date(req.body.student.birthDate);
     if (birthDate.getYear() > 2004) {
         errors.push({ text: 'Указана неверная дата рождения.' });
     }
-    await Student.findOne({ studentNumber: req.body.studentNumber })
+    await Student.findOne({ studentNumber: req.body.student.studentNumber })
         .then(student => {
             if (student) {
                 errors.push({ text: 'Указанный студент уже зарегестрирован. Пожалуйста, проверьте правильность номера студ. билета.' });
@@ -43,23 +43,11 @@ router.post('/', ensureAuthenticated, ensureUser, async (req, res) => {
         console.log(errors);
         res.render('students/add', {
             errors: errors,
-            studentNumber: req.body.studentNumber,
-            firstName: req.body.firstName,
-            lastName: req.body.lastName,
-            patronymic: req.body.patronymic,
-            group: req.body.group
+            student: req.body.student
         });
     }
     else {
-        Student.create({
-            studentNumber: req.body.studentNumber,
-            firstName: req.body.firstName,
-            lastName: req.body.lastName,
-            patronymic: req.body.patronymic,
-            group: req.body.group,
-            birthDate: req.body.birthDate,
-            sex: req.body.sex
-        })
+        Student.create(req.body.student)
             .then(student => {
                 bcrypt.genSalt(10, (err, salt) => {
                     bcrypt.hash(student.studentNumber, salt, (err, hash) => {
@@ -76,7 +64,7 @@ router.post('/', ensureAuthenticated, ensureUser, async (req, res) => {
                                 status: 'student'
                             })
                                 .then(student => {
-                                    req.flash('success_msg', `Студент № ${req.body.studentNumber} успешно зарегестрирован.`);
+                                    req.flash('success_msg', `Студент № ${req.body.student.studentNumber} успешно зарегестрирован.`);
                                     res.redirect('/students');
                                 })
                                 .catch(err => {
@@ -112,5 +100,28 @@ router.get('/:id/edit', ensureAuthenticated, ensureUser, (req, res) => {
         });
 });
 
+router.put('/:id', ensureAuthenticated, ensureUser, (req, res) => {
+    Student.findByIdAndUpdate(req.params.id, req.body.student)
+        .then(student =>{
+            req.flash('success_msg', `Данные студента № ${student.studentNumber} успешно изменены.`);
+            res.redirect('/students');
+        })
+        .catch(err => {
+            req.flash('error_msg', `Возникла критическая ошибка. Попробуйте повторить операцию позже.`);
+            res.redirect('/students');
+        });
+});
+
+router.delete('/:id', ensureAuthenticated, ensureUser, (req, res) =>{
+    Student.findByIdAndDelete(req.params.id)
+        .then(student =>{
+            req.flash('success_msg', `Данные студента № ${student.studentNumber} успешно удалены.`);
+            res.redirect('/students');
+        })
+        .catch(err => {
+            req.flash('error_msg', `Возникла критическая ошибка. Попробуйте повторить операцию позже.`);
+            res.redirect('/students');
+        });
+});
 
 module.exports = router;

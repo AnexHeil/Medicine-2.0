@@ -83,6 +83,34 @@ router.post('/', ensureAuthenticated, ensureUser, async (req, res) => {
         res.render('researches/spyro/add', {errors: errors, research: newResearch });
     }
 });
+router.get('/:id/edit', ensureAuthenticated, ensureUser, (req, res) => {
+    Spyro.findById(req.params.id)
+        .populate('student')
+        .then(research => {
+            if (research) {
+                res.render('researches/spyro/edit', { research: research });
+            }
+            else {
+                req.flash('error_msg', `Исследование не найдено.`);
+                res.redirect('/spyro');
+            }
+        })
+        .catch(err => {
+            req.flash('error_msg', `Возникла критическая ошибка. Попробуйте повторить операцию позже.`);
+            res.redirect('/spyro');
+        });
+});
+router.put('/:id', ensureAuthenticated, ensureUser, (req, res) => {
+    Spyro.findByIdAndUpdate(req.params.id, req.body.research)
+        .then(research => {
+            req.flash('success_msg', 'Данные исследования успешно изменены.')
+            res.redirect('/spyro');
+        })
+        .catch(err => {
+            req.flash('error_msg', `Возникла критическая ошибка. Попробуйте повторить операцию позже.`);
+            res.redirect('/spyro');
+        });
+});
 router.delete('/:id', ensureAuthenticated, ensureUser, (req, res) => {
     Spyro.findByIdAndDelete(req.params.id)
         .then(research => {

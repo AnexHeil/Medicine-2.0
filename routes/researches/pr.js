@@ -83,6 +83,34 @@ router.post('/', ensureAuthenticated, ensureUser, async (req, res) => {
         res.render('researches/pr/add', {errors: errors, research: newResearch });
     }
 });
+router.get('/:id/edit', ensureAuthenticated, ensureUser, (req, res) => {
+    PR.findById(req.params.id)
+        .populate('student')
+        .then(research => {
+            if (research) {
+                res.render('researches/pr/edit', { research: research });
+            }
+            else {
+                req.flash('error_msg', `Исследование не найдено.`);
+                res.redirect('/pr');
+            }
+        })
+        .catch(err => {
+            req.flash('error_msg', `Возникла критическая ошибка. Попробуйте повторить операцию позже.`);
+            res.redirect('/pr');
+        });
+});
+router.put('/:id', ensureAuthenticated, ensureUser, (req, res) => {
+    PR.findByIdAndUpdate(req.params.id, req.body.research)
+        .then(research => {
+            req.flash('success_msg', 'Данные исследования успешно изменены.')
+            res.redirect('/pr');
+        })
+        .catch(err => {
+            req.flash('error_msg', `Возникла критическая ошибка. Попробуйте повторить операцию позже.`);
+            res.redirect('/pr');
+        });
+});
 router.delete('/:id', ensureAuthenticated, ensureUser, (req, res) => {
     PR.findByIdAndDelete(req.params.id)
         .then(research => {

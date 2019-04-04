@@ -48,7 +48,7 @@ router.post('/', ensureAuthenticated, ensureUser, async (req, res) => {
     let errors = [];
     let newResearch = req.body.research;
     await Student.findOne({ studentNumber: req.body.studentNumber })
-        .then(async function (student) {
+        .then(async function(student) {
             if (student) {
                 let studentID = student._id;
                 await ECG.findOne({ researchDate: newResearch.researchDate, student: studentID })
@@ -87,7 +87,34 @@ router.post('/', ensureAuthenticated, ensureUser, async (req, res) => {
         });
     }
 });
-
+router.get('/:id/edit', ensureAuthenticated, ensureUser, (req, res) => {
+    ECG.findById(req.params.id)
+        .populate('student')
+        .then(research => {
+            if (research) {
+                res.render('researches/ecg/edit', { research: research });
+            }
+            else {
+                req.flash('error_msg', `Исследование не найдено.`);
+                res.redirect('/ecg');
+            }
+        })
+        .catch(err => {
+            req.flash('error_msg', `Возникла критическая ошибка. Попробуйте повторить операцию позже.`);
+            res.redirect('/ecg');
+        });
+});
+router.put('/:id', ensureAuthenticated, ensureUser, (req, res) => {
+    ECG.findByIdAndUpdate(req.params.id, req.body.research)
+        .then(research => {
+            req.flash('success_msg', 'Данные исследования успешно изменены.')
+            res.redirect('/ecg');
+        })
+        .catch(err => {
+            req.flash('error_msg', `Возникла критическая ошибка. Попробуйте повторить операцию позже.`);
+            res.redirect('/ecg');
+        });
+});
 router.delete('/:id', ensureAuthenticated, ensureUser, (req, res) => {
     ECG.findByIdAndDelete(req.params.id)
         .then(research => {

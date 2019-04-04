@@ -87,6 +87,34 @@ router.post('/', ensureAuthenticated, ensureUser, async (req, res) => {
         });
     }
 });
+router.get('/:id/edit', ensureAuthenticated, ensureUser, (req, res) => {
+    Antropology.findById(req.params.id)
+        .populate('student')
+        .then(research => {
+            if (research) {
+                res.render('researches/antropology/edit', { research: research });
+            }
+            else {
+                req.flash('error_msg', `Исследование не найдено.`);
+                res.redirect('/antropology');
+            }
+        })
+        .catch(err => {
+            req.flash('error_msg', `Возникла критическая ошибка. Попробуйте повторить операцию позже.`);
+            res.redirect('/antropology');
+        });
+});
+router.put('/:id', ensureAuthenticated, ensureUser, (req, res) => {
+    Antropology.findByIdAndUpdate(req.params.id, req.body.research)
+        .then(research => {
+            req.flash('success_msg', 'Данные исследования успешно изменены.')
+            res.redirect('/antropology');
+        })
+        .catch(err => {
+            req.flash('error_msg', `Возникла критическая ошибка. Попробуйте повторить операцию позже.`);
+            res.redirect('/antropology');
+        });
+});
 router.delete('/:id', ensureAuthenticated, ensureUser, (req, res) => {
     Antropology.findByIdAndDelete(req.params.id)
         .then(research => {

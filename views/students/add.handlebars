@@ -1,38 +1,38 @@
 <form action="/students" method="POST">
     <div class="form-group">
         <label for="studentNumber">Номер студенческого билета</label>
-        <input type="text" name="studentNumber" class="form-control" value="{{studentNumber}}" autofocus required>
+        <input type="text" name="student[studentNumber]" class="form-control" value="{{student.studentNumber}}" autofocus required>
     </div>
     <div class="form-group">
         <label for="lastName">Фамилия</label>
-        <input type="text" name="lastName" class="form-control" value="{{lastName}}" required>
+        <input type="text" name="student[lastName]" class="form-control" value="{{student.lastName}}" required>
     </div>
     <div class="form-group">
         <label for="firstName">Имя</label>
-        <input type="text" name="firstName" class="form-control" value="{{firstName}}" required>
+        <input type="text" name="student[firstName]" class="form-control" value="{{student.firstName}}" required>
     </div>
     <div class="form-group">
         <label for="patronymic">Отчество</label>
-        <input type="text" name="patronymic" class="form-control" value="{{patronymic}}" required>
+        <input type="text" name="student[patronymic]" class="form-control" value="{{student.patronymic}}" required>
     </div>
     <div class="form-group">
         <label for="group">Номер группы</label>
-        <input type="text" name="group" class="form-control" value="{{group}}" required>
+        <input type="text" name="student[group]" class="form-control" value="{{student.group}}" required>
     </div>
     <div class="form-group">
         <label for="birthDate">Дата рождения</label>
-        <input type="date" name="birthDate" class="form-control" value="{{formatDate birthDate 'YYYY-MM-DD'}}" required>
+        <input type="date" name="student[birthDate]" class="form-control" value="{{formatDate student.birthDate 'YYYY-MM-DD'}}" required>
     </div>
     <div class="form-group">
         <label for="sex">Пол</label>
         <div class="radios">
             <label>Муж</label>
-            <input type="radio" id="man" name="sex" class="radio" value="Муж" {{checkSex sex 'Муж'}}>
+            <input type="radio" id="man" name="student[sex]" class="radio" value="Муж" {{checkSex student.sex 'Муж'}}>
             <label>Жен</label>
-            <input type="radio" name="sex" class="radio" value="Жен" {{checkSex sex 'Жен'}}>
+            <input type="radio" name="student[sex]" class="radio" value="Жен" {{checkSex student.sex 'Жен'}}>
         </div>
     </div>
     <div class="form-group">
-        <input class="form-control btn btn-lg btn-primary" type="submit" value="Готово">
+        <input class="form-control btn btn-lg btn-primary" type="submit" value="Принять изменения">
     </div>
 </form>

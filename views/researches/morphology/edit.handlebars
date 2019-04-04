@@ -1,0 +1,103 @@
+<form action="/morphology/{{research.id}}?_method=PUT" method="POST">
+    <div class="flex-box">
+        <div class="inline-div">
+            <div class="form-group">
+                <label for="studentNumber">Номер студенческого билета осбледуемого</label>
+                <input type="text" name="studentNumber" class="form-control" value="{{research.student.studentNumber}}" readonly>
+            </div>
+            <div class="form-group">
+                <label for="faceHeight">Высота лица</label>
+                <input type="text" name="research[faceHeight]" class="form-control" value="{{research.faceHeight}}" required>
+            </div>
+            <div class="form-group">
+                <label for="cheeckWidth">Скуловая ширина</label>
+                <input type="text" name="research[cheeckWidth]" class="form-control" value="{{research.cheeckWidth}}" required>
+            </div>
+            <div class="form-group">
+                <label for="wristLengthRight">Длина правой кисти</label>
+                <input type="text" name="research[wristLengthRight]" class="form-control" value="{{research.wristLengthRight}}" required>
+            </div>
+            <div class="form-group">
+                <label for="wristLengthLeft">Длина левой кисти</label>
+                <input type="text" name="research[wristLengthLeft]" class="form-control" value="{{research.wristLengthLeft}}" required>
+            </div>
+            <div class="form-group">
+                <label for="middleFingerTestRight">Тест среднего пальца правой руки</label>
+                <input type="text" name="research[middleFingerTestRight]" class="form-control" value="{{research.middleFingerTestRight}}"
+                    required>
+            </div>
+            <div class="form-group">
+                <label for="middleFingerTestLeft">Тест среднего пальца левой руки</label>
+                <input type="text" name="research[middleFingerTestLeft]" class="form-control" value="{{research.middleFingerTestLeft}}" required>
+            </div>
+        </div>
+        <div class="inline-div">
+            <div class="form-group">
+                <label for="weight">Тест большого пальца правой руки</label>
+                <input type="text" name="research[bigFingerTestRight]" class="form-control" value="{{research.bigFingerTestRight}}" required>
+            </div>
+            <div class="form-group">
+                <label for="bigFingerTestLeft">Тест большого пальца левой руки</label>
+                <input type="text" name="research[bigFingerTestLeft]" class="form-control" value="{{research.bigFingerTestLeft}}" required>
+            </div>
+            <div class="form-group">
+                <label for="wristTestRight">Тест запястья правой руки</label>
+                <input type="text" name="research[wristTestRight]" class="form-control" value="{{research.wristTestRight}}" required>
+            </div>
+            <div class="form-group">
+                <label for="wristTestLeft">Тест запястья левой руки</label>
+                <input type="text" name="research[wristTestLeft]" class="form-control" value="{{research.wristTestLeft}}" required>
+            </div>
+            <div class="form-group">
+                <label for="TMP">ТМП</label>
+                <input type="text" name="research[TMP]" class="form-control" value="{{research.TMP}}" required>
+            </div>
+            <div class="form-group">
+                <label for="TML">ТМЛ</label>
+                <input type="text" name="research[TML]" class="form-control" value="{{research.TML}}" required>
+            </div>
+            <div class="form-group">
+                <label for="TBPPR">ТБППР</label>
+                <input type="text" name="research[TBPPR]" class="form-control" value="{{research.TBPPR}}" required>
+            </div>
+        </div>
+        <div class="inline-div">
+            <div class="form-group">
+                <label for="chestOnMaxBreath">ТБПЛР</label>
+                <input type="text" name="research[TBPLR]" class="form-control" value="{{research.TBPLR}}" required>
+            </div>
+            <div class="form-group">
+                <label for="PLS">ПЛС</label>
+                <input type="text" name="research[PLS]" class="form-control" value="{{research.PLS}}" required>
+            </div>
+            <div class="form-group">
+                <label for="LLS">ЛЛС</label>
+                <input type="text" name="research[LLS]" class="form-control" value="{{research.LLS}}" required>
+            </div>
+            <div class="form-group">
+                <label for="PKS">ПКС</label>
+                <input type="text" name="research[PKS]" class="form-control" value="{{research.PKS}}" required>
+            </div>
+            <div class="form-group">
+                <label for="LKS">ЛКС</label>
+                <input type="text" name="research[LKS]" class="form-control" value="{{research.LKS}}" required>
+            </div>
+            <div class="form-group">
+                <label for="TPP">ТПП</label>
+                <input type="text" name="research[TPP]" class="form-control" value="{{research.TPP}}" required>
+            </div>
+            <div class="form-group">
+                <label for="legSize">Размер обуви</label>
+                <input type="number" name="research[legSize]" class="form-control" value="{{research.legSize}}" required>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="researchDate">Дата проведения обследования</label>
+        <input type="date" name="research[researchDate]" class="form-control" value="{{formatDate research.researchDate "YYYY-MM-DD"}}"
+            required>
+    </div>
+    <div class="form-group third-width">
+        <input class="form-control btn btn-lg btn-primary" type="submit" value="Готово">
+    </div>
+</form>

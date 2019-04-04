@@ -1,0 +1,22 @@
+<form action="/shg/{{research.id}}?_method=PUT" method="POST">
+    <div class="form-group">
+        <label for="studentNumber">Номер студенческого билета осбледуемого</label>
+        <input type="text" name="studentNumber" class="form-control" value="{{research.student.studentNumber}}" readonly>
+    </div>
+    <div class="form-group">
+        <label for="shtange">Штанге</label>
+        <input type="text" name="research[shtange]" class="form-control" value="{{research.shtange}}" required>
+    </div>
+    <div class="form-group">
+        <label for="stanPower">Генчи</label>
+        <input type="text" name="research[genchi]" class="form-control" value="{{research.genchi}}" required>
+    </div>
+    <div class="form-group">
+        <label for="researchDate">Дата проведения обследования</label>
+        <input type="date" name="research[researchDate]" class="form-control"
+            value="{{formatDate research.researchDate "YYYY-MM-DD"}}" required>
+    </div>
+    <div class="form-group">
+        <input class="form-control btn btn-lg btn-primary" type="submit" value="Готово">
+    </div>
+</form>

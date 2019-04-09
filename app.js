@@ -26,6 +26,9 @@ const spyro = require('./routes/researches/spyro');
 const op = require('./routes/researches/op');
 const shg = require('./routes/researches/shg');
 const pr = require('./routes/researches/pr');
+const antrmorphCalcs = require('./routes/analysis/antrmorph');
+const prCacls = require('./routes/analysis/pr');
+const shgCacls = require('./routes/analysis/shg');
 require('./config/passport')(passport);
 
 const {
@@ -80,6 +83,9 @@ app.use('/spyro', spyro);
 app.use('/shg', shg);
 app.use('/op', op);
 app.use('/pr', pr);
+app.use('/analysis/antrmorph', antrmorphCalcs);
+app.use('/analysis/pr', prCacls);
+app.use('/analysis/shg', shgCacls);
 
 
 const port = process.env.port || 3000;

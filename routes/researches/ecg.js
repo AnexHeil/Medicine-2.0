@@ -25,10 +25,10 @@ router.get('/', ensureAuthenticated, (req, res) => {
                     if (searchParams) {
                         result = searchResearches(researches, searchParams);
                         searchParams = undefined;
-                        res.render('researches/ecg/index', { researches: result, students: students, groups: groups, way: '/ecg' });
+                        res.render('researches/ecg/index', { researches: result, students: students, groups: groups, way: '/ecg', way2: 'analysis/ecg/perform' });
                     }
                     else {
-                        res.render('researches/ecg/index', { researches: researches, students: students, groups: groups, way: '/ecg' });
+                        res.render('researches/ecg/index', { researches: researches, students: students, groups: groups, way: '/ecg', way2: 'analysis/ecg/perform' });
                     }
                 })
                 .catch(err => {

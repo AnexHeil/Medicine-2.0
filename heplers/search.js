@@ -19,6 +19,22 @@ module.exports = {
         }
         return researches;
     },
+    searchAnalysis: function (researches, params) {
+        if (params.studentSearch != '' || params.groupSearch != '' || params.dateSearch) {
+            for (let i = 0; i < researches.length; i++) {
+                if (params.studentSearch != '' && params.studentSearch.indexOf(researches[i].research.student.studentNumber) == -1) {
+                    researches.splice(i, 1)
+                }
+                else if (params.groupSearch != '' && params.groupSearch.indexOf(researches[i].research.student.group) == -1) {
+                    researches.splice(i, 1);
+                }
+                else if (params.dateSearch && researches[i].research.researchDate.getTime() != new Date(params.dateSearch).getTime()) {
+                    researches.splice(i, 1);
+                }
+            }
+        }
+        return researches;
+    },
     formGroups: function(students){
         let groups = [];
         for(let i = 0; i < students.length; i++){
@@ -40,5 +56,13 @@ module.exports = {
             }
         }
         return researches;
-    }
+    },
+    formAnalysisForStudent: function(username, data){
+        for(let i = 0; i < data.length; i++){
+            if(data[i].research.student.studentNumber != username){
+                data.splice(i, 1);
+            }
+        }
+        return data;
+    },
 }

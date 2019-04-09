@@ -1,0 +1,29 @@
+{{>_dashboard}}
+<div class="table-responsive">
+    <table class="table table-bordered table-hover table-sm">
+        <thead class="thead-dark">
+            <tr>
+                <th class="table-column-header">Фамилия <i class="arrow fa fa-sort"></i></th>
+                <th class="table-column-header">Имя <i class="arrow fa fa-sort"></i></th>
+                <th class="table-column-header">Отчество <i class="arrow fa fa-sort"></i></th>
+                <th class="table-column-header">№ студ. билета <i class="arrow fa fa-sort"></i></th>
+                <th class="table-column-header">Группа <i class="arrow fa fa-sort"></i></th>
+                <th class="table-column-header">Анализ<i class="arrow fa fa-sort"></i></th>
+                <th class="table-column-header">Дата обследования <i class="arrow fa fa-sort"></i></th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each data}}
+            <tr>
+                <td>{{research.student.lastName}}</td>
+                <td>{{research.student.firstName}}</td>
+                <td>{{research.student.patronymic}}</td>
+                <td>{{research.student.studentNumber}}</td>
+                <td>{{research.student.group}}</td>
+                <td><span data-tooltip="{{patalogys}}" class="helper btn btn-xs btn-dark inline-div">Анализ</span></td>
+                <td>{{formatDate research.researchDate 'DD-MM-YYYY'}}</td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</div>

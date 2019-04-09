@@ -69,18 +69,22 @@
       background: #fff;
       /* box-shadow: 3px 3px 3px rgba(0, 0, 0, .3); */
 }
-.add-button{
+.side-buttons{
     position: absolute;
+    right: 0.8%;
+    top: 12%;
+}
+.add-button{
+    
     font-size: 4em;
     /* color: white;
     background:  #007bff; */
     border: none;
     /* border-radius: 50%; */
-    right: 0.8%;
-    top: 12%;
-
     text-decoration: none;
     color: #343a40;
+    display: block;
+    text-align: center;
 }
 .search-button{
     background: none;

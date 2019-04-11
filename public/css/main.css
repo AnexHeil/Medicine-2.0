@@ -75,7 +75,7 @@
     top: 12%;
 }
 .add-button{
-    
+
     font-size: 4em;
     /* color: white;
     background:  #007bff; */
@@ -164,3 +164,15 @@
 .logo-login{
     margin-left: 1%;
 } */
+
+
+.reportWindow{
+    z-index: 2000;
+    position: absolute;
+    top: 3;
+    left: 25%;
+    width: 60%;
+    height: 50%;
+    background: rgba(169, 169, 169, 0.3);
+    transition: 0.2s;
+}

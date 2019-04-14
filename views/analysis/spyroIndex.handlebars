@@ -9,7 +9,9 @@
                 <th class="table-column-header">Отчество <i class="arrow fa fa-sort"></i></th>
                 <th class="table-column-header">№ студ. билета <i class="arrow fa fa-sort"></i></th>
                 <th class="table-column-header">Группа <i class="arrow fa fa-sort"></i></th>
-                <th data-tooltip = "Индекс Руфье" class="table-column-header helper">ИР<i class="arrow fa fa-sort"></i></th>
+                <th data-tooltip = "Жизненный индекс" class="helper table-column-header">ЖИ <i class="arrow fa fa-sort"></i></th>
+                <th data-tooltip = "Показатель отн-ния мышеченой силы к массе тела" class="table-column-header">ПОМСМТ 1 <i class="arrow fa fa-sort"></i></th>
+                <th data-tooltip = "Показатель отн-ния мышеченой силы к массе тела" class="table-column-header">ПОМСМТ 2 <i class="arrow fa fa-sort"></i></th>
                 <th class="table-column-header">Анализ<i class="arrow fa fa-sort"></i></th>
                 <th class="table-column-header">Дата обследования <i class="arrow fa fa-sort"></i></th>
             </tr>
@@ -22,7 +24,9 @@
                 <td>{{research.student.patronymic}}</td>
                 <td>{{research.student.studentNumber}}</td>
                 <td>{{research.student.group}}</td>
-                <td>{{ir}}</td>
+                <td>{{gi}}</td>
+                <td>{{pomsmt1}}</td>
+                <td>{{pomsmt2}}</td>
                 <td><span data-report="{{patalogys}}" class="report btn btn-xs btn-dark inline-div">Анализ</span></td>
                 <td>{{formatDate research.researchDate 'DD-MM-YYYY'}}</td>
             </tr>

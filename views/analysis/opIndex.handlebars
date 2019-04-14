@@ -1,0 +1,52 @@
+{{>_dashboard}}
+{{>_add}}
+<div class="table-responsive">
+    <table class="table table-bordered table-hover table-sm">
+        <thead class="thead-dark">
+            <tr>
+                <th class="table-column-header">Фамилия <i class="arrow fa fa-sort"></i></th>
+                <th class="table-column-header">Имя <i class="arrow fa fa-sort"></i></th>
+                <th class="table-column-header">Отчество <i class="arrow fa fa-sort"></i></th>
+                <th class="table-column-header">№ студ. билета <i class="arrow fa fa-sort"></i></th>
+                <th class="table-column-header">Группа <i class="arrow fa fa-sort"></i></th>
+                <th data-tooltip="Изменение ЧСС 1" class="helper table-column-header">ИЧСС1 <i class="arrow fa fa-sort"></i></th>
+                <th data-tooltip="Изменение САД 1" class="helper table-column-header">ИСАД1 <i class="arrow fa fa-sort"></i></th>
+                <th data-tooltip="Изменение ДАД 1" class="helper table-column-header">ИДАД1 <i class="arrow fa fa-sort"></i></th>
+                <th data-tooltip="Изменение ЧСС 2" class="helper table-column-header">ИЧСС2 <i class="arrow fa fa-sort"></i></th>
+                <th data-tooltip="Изменение САД 2" class="helper table-column-header">ИСАД2 <i class="arrow fa fa-sort"></i></th>
+                <th data-tooltip="Изменение ДАД 2" class="helper table-column-header">ИДАД2 <i class="arrow fa fa-sort"></i></th>
+                <th data-tooltip="Адаптиционный потенциал" class="helper table-column-header">АП <i class="arrow fa fa-sort"></i></th>
+                <th data-tooltip="Вегетативный индекс Кердо" class="helper table-column-header">ВИК <i class="arrow fa fa-sort"></i></th>
+                <th data-tooltip="Тип саморегулирования кровотечения" class="helper table-column-header">ТСК <i class="arrow fa fa-sort"></i></th>
+                <th data-tooltip="Показатель двойного произведения (индекс Робинсона)" class="helper table-column-header">ПДП <i class="arrow fa fa-sort"></i></th>
+                <th class="table-column-header">Баллы <i class="arrow fa fa-sort"></i></th>
+                <th class="table-column-header">Анализ<i class="arrow fa fa-sort"></i></th>
+                <th class="table-column-header">Дата обследования <i class="arrow fa fa-sort"></i></th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each data}}
+            <tr>
+                <td>{{research.student.lastName}}</td>
+                <td>{{research.student.firstName}}</td>
+                <td>{{research.student.patronymic}}</td>
+                <td>{{research.student.studentNumber}}</td>
+                <td>{{research.student.group}}</td>
+                <td>{{css1Change}}</td>
+                <td>{{sad1Change}}</td>
+                <td>{{dad1Change}}</td>
+                <td>{{css2Change}}</td>
+                <td>{{sad2Change}}</td>
+                <td>{{dad2Change}}</td>
+                <td>{{ap}}</td>
+                <td>{{ik}}</td>
+                <td>{{tsk}}</td>
+                <td>{{pdp}}</td>
+                <td>{{points}}</td>
+                <td><span data-report="{{patalogys}}" class="report btn btn-xs btn-dark inline-div">Анализ</span></td>
+                <td>{{formatDate research.researchDate 'DD-MM-YYYY'}}</td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</div>

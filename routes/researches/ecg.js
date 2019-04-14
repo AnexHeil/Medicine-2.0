@@ -3,10 +3,13 @@ const router = express.Router();
 const mongose = require('mongoose');
 require('../../models/ECG');
 const ECG = mongose.model('ecgResearches');
+require('../../models/ECGCalcs');
+const ECGCalcs = mongose.model('ecgCalcs');
 require('../../models/Student');
 const Student = mongose.model('students');
 const { searchResearches, formGroups, formForStudent } = require('../../heplers/search');
 const { ensureAuthenticated, ensureUser } = require('../../heplers/auth');
+const { calculateECG } = require('../../heplers/calcs');
 let searchParams;
 router.get('/add', ensureAuthenticated, ensureUser, (req, res) => {
     res.render('researches/ecg/add');
@@ -25,10 +28,10 @@ router.get('/', ensureAuthenticated, (req, res) => {
                     if (searchParams) {
                         result = searchResearches(researches, searchParams);
                         searchParams = undefined;
-                        res.render('researches/ecg/index', { researches: result, students: students, groups: groups, way: '/ecg', way2: 'analysis/ecg/perform' });
+                        res.render('researches/ecg/index', { researches: result, students: students, groups: groups, way: '/ecg', way2: '/ecg', way3: '/ecg' });
                     }
                     else {
-                        res.render('researches/ecg/index', { researches: researches, students: students, groups: groups, way: '/ecg', way2: 'analysis/ecg/perform' });
+                        res.render('researches/ecg/index', { researches: researches, students: students, groups: groups, way: '/ecg', way2: '/ecg', way3: '/ecg' });
                     }
                 })
                 .catch(err => {
@@ -48,7 +51,7 @@ router.post('/', ensureAuthenticated, ensureUser, async (req, res) => {
     let errors = [];
     let newResearch = req.body.research;
     await Student.findOne({ studentNumber: req.body.studentNumber })
-        .then(async function(student) {
+        .then(async function (student) {
             if (student) {
                 let studentID = student._id;
                 await ECG.findOne({ researchDate: newResearch.researchDate, student: studentID })
@@ -105,10 +108,19 @@ router.get('/:id/edit', ensureAuthenticated, ensureUser, (req, res) => {
         });
 });
 router.put('/:id', ensureAuthenticated, ensureUser, (req, res) => {
-    ECG.findByIdAndUpdate(req.params.id, req.body.research)
+    ECG.findByIdAndUpdate(req.params.id, req.body.research, { new: true })
         .then(research => {
-            req.flash('success_msg', 'Данные исследования успешно изменены.')
-            res.redirect('/ecg');
+            ECGCalcs.findOne({ research: research._id })
+                .then(calc => {
+                    if (calc) {
+                        let calcs = calculateECG(research);
+                        ECGCalcs.findByIdAndUpdate(calc._id, calcs, { new: true })
+                            .then(newCalc => {
+                                req.flash('success_msg', 'Данные исследования успешно изменены.')
+                                res.redirect('/ecg');
+                            })
+                    }
+                })
         })
         .catch(err => {
             req.flash('error_msg', `Возникла критическая ошибка. Попробуйте повторить операцию позже.`);

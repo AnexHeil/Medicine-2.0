@@ -27,10 +27,10 @@ router.get('/', ensureAuthenticated, ensureUser, (req, res) => {
                     if (searchParams) {
                         result = searchAnalysis(data, searchParams);
                         searchParams = undefined;
-                        res.render('analysis/shgIndex', { data: result, students: students, groups: groups, way: '/analysis/shg' });
+                        res.render('analysis/shgIndex', { data: result, students: students, groups: groups,way: '/shg', way2: '/shg', way3: '/analysis/shg' });
                     }
                     else {
-                        res.render('analysis/shgIndex', { data: data, students: students, groups: groups, way: '/analysis/shg' });
+                        res.render('analysis/shgIndex', { data: data, students: students, groups: groups, way: '/shg', way2: '/shg', way3: '/analysis/shg' });
                     }
                 })
                 .catch(err => {

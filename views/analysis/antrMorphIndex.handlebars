@@ -1,4 +1,5 @@
 {{>_dashboard}}
+{{>_add}}
 <div class="table-responsive">
     <table class="table table-bordered table-hover table-sm">
         <thead class="thead-dark">
@@ -24,11 +25,11 @@
         <tbody>
             {{#each data}}
             <tr>
-                <td>{{research.student.lastName}}</td>
-                <td>{{research.student.firstName}}</td>
-                <td>{{research.student.patronymic}}</td>
-                <td>{{research.student.studentNumber}}</td>
-                <td>{{research.student.group}}</td>
+                <td class="student-info">{{research.student.lastName}}</td>
+                <td class="student-info">{{research.student.firstName}}</td>
+                <td class="student-info">{{research.student.patronymic}}</td>
+                <td class="student-info">{{research.student.studentNumber}}</td>
+                <td class="student-info">{{research.student.group}}</td>
                 <td>{{imt}}</td>
                 <td>{{svstn}}</td>
                 <td>{{orr}}</td>
@@ -38,7 +39,7 @@
                 <td>{{ri}}</td>
                 <td>{{rp}}</td>
                 <td>{{points}}</td>
-                <td><span data-tooltip="{{patalogys}}" class="helper btn btn-xs btn-dark inline-div">Анализ</span></td>
+                <td><span data-report="{{patalogys}}" class="report btn btn-xs btn-dark inline-div">Анализ</span></td>
                 <td>{{formatDate research.researchDate 'DD-MM-YYYY'}}</td>
             </tr>
             {{/each}}

@@ -29,10 +29,10 @@ router.get('/', ensureAuthenticated, ensureUser, (req, res) => {
                     if (searchParams) {
                         result = searchAnalysis(data, searchParams);
                         searchParams = undefined;
-                        res.render('analysis/antrMorphIndex', { data: result, students: students, groups: groups, way: '/analysis/antrmorph' });
+                        res.render('analysis/antrMorphIndex', { data: result, students: students, groups: groups, way: '/antropology', way2: '/antrmorph', way3: '/analysis/antrmorph' });
                     }
                     else {
-                        res.render('analysis/antrMorphIndex', { data: data, students: students, groups: groups, way: '/analysis/antrmorph' });
+                        res.render('analysis/antrMorphIndex', { data: data, students: students, groups: groups, way: '/antropology', way2: '/antrmorph', way3: '/analysis/antrmorph'});
                     }
                 })
                 .catch(err => {

@@ -1,21 +1,21 @@
 const express = require('express');
 const router = express.Router();
 const mongose = require('mongoose');
-require('../../models/PR');
-const PR = mongose.model('prResearches');
-require('../../models/PRCalcs');
-const PRCalcs = mongose.model('prCalcs');
+require('../../models/ECG');
+const ECG = mongose.model('ecgResearches');
+require('../../models/ECGCalcs');
+const ECGCalcs = mongose.model('ecgCalcs');
 require('../../models/Student');
 const Student = mongose.model('students');
 const { searchAnalysis, formGroups, formAnalysisForStudent } = require('../../heplers/search');
 const { ensureAuthenticated, ensureUser } = require('../../heplers/auth');
-const { calculatePR } = require('../../heplers/calcs');
+const { calculateECG } = require('../../heplers/calcs');
 let searchParams;
 router.get('/', ensureAuthenticated, ensureUser, (req, res) => {
     Student.find({})
         .then(students => {
             const groups = formGroups(students);
-            PRCalcs.find({})
+            ECGCalcs.find({})
                 .populate({
                     path: 'research',
                     populate: { path: 'student' }
@@ -27,10 +27,10 @@ router.get('/', ensureAuthenticated, ensureUser, (req, res) => {
                     if (searchParams) {
                         result = searchAnalysis(data, searchParams);
                         searchParams = undefined;
-                        res.render('analysis/prIndex', { data: result, students: students, groups: groups, way: '/pr', way2: '/pr', way3: '/analysis/pr' });
+                        res.render('analysis/ecgIndex', { data: result, students: students, groups: groups, way: '/ecg', way2: '/ecg', way3: '/analysis/ecg' });
                     }
                     else {
-                        res.render('analysis/prIndex', { data: data, students: students, groups: groups, way: '/pr', way2: '/pr', way3: '/analysis/pr' });
+                        res.render('analysis/ecgIndex', { data: data, students: students, groups: groups, way: '/ecg', way2: '/ecg', way3: '/analysis/ecg' });
                     }
                 })
                 .catch(err => {
@@ -42,23 +42,23 @@ router.get('/', ensureAuthenticated, ensureUser, (req, res) => {
 });
 router.post('/search', (req, res) => {
     searchParams = req.body;
-    res.redirect('/analysis/pr');
+    res.redirect('/analysis/ecg');
 });
 router.get('/perform', ensureAuthenticated, ensureUser, async (req, res) => {
     let errors = 0;
-    PR.find({})
-        .then(prResearches => {
-            prResearches.forEach(pr => {
-                PRCalcs.findOne({ research: pr._id })
+    ECG.find({})
+        .then(ecgResearches => {
+            ecgResearches.forEach(ecg => {
+                ECGCalcs.findOne({ research: ecg._id })
                     .then(research => {
                         if (!research) {
-                            let analysis = calculatePR(pr);
-                            PRCalcs.create(analysis);
+                            let analysis = calculateECG(ecg);
+                            ECGCalcs.create(analysis);
                         }
                     })
             });
-            req.flash('success_msg', 'Анализ всех доступных данных Пробы Руфье успешно произведён.');
-            res.redirect('/analysis/pr');
+            req.flash('success_msg', 'Анализ всех доступных данных ЭКГ успешно произведён.');
+            res.redirect('/analysis/ecg');
         })
 });
 module.exports = router;

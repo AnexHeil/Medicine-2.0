@@ -29,6 +29,9 @@ const pr = require('./routes/researches/pr');
 const antrmorphCalcs = require('./routes/analysis/antrmorph');
 const prCacls = require('./routes/analysis/pr');
 const shgCacls = require('./routes/analysis/shg');
+const opCacls = require('./routes/analysis/op');
+const spyroCacls = require('./routes/analysis/spyro');
+const ecgCalcs = require('./routes/analysis/ecg');
 require('./config/passport')(passport);
 
 const {
@@ -86,6 +89,9 @@ app.use('/pr', pr);
 app.use('/analysis/antrmorph', antrmorphCalcs);
 app.use('/analysis/pr', prCacls);
 app.use('/analysis/shg', shgCacls);
+app.use('/analysis/op', opCacls);
+app.use('/analysis/spyro', spyroCacls);
+app.use('/analysis/ecg', ecgCalcs);
 
 
 const port = process.env.port || 3000;

@@ -3,10 +3,13 @@ const router = express.Router();
 const mongose = require('mongoose');
 require('../../models/ShG');
 const ShG = mongose.model('shGResearches');
+require('../../models/ShGCalcs');
+const ShGcalcs = mongose.model('shgCalcs')
 require('../../models/Student');
 const Student = mongose.model('students');
 const { searchResearches, formGroups, formForStudent } = require('../../heplers/search');
 const { ensureAuthenticated, ensureUser } = require('../../heplers/auth');
+const { calculateShG } = require('../../heplers/calcs');
 let searchParams;
 router.get('/add', ensureAuthenticated, ensureUser, (req, res) => {
     res.render('researches/shg/add');
@@ -25,10 +28,10 @@ router.get('/', ensureAuthenticated, (req, res) => {
                     if (searchParams) {
                         result = searchResearches(researches, searchParams);
                         searchParams = undefined;
-                        res.render('researches/shg/index', { researches: result, students: students, groups: groups, way: '/shg', way2: '/analysis/shg/perform' });
+                        res.render('researches/shg/index', { researches: result, students: students, groups: groups, way: '/shg', way2: '/shg', way3: '/shg' });
                     }
                     else {
-                        res.render('researches/shg/index', { researches: researches, students: students, groups: groups, way: '/shg', way2: '/analysis/shg/perform' });
+                        res.render('researches/shg/index', { researches: researches, students: students, groups: groups, way: '/shg', way2: '/shg', way3: '/shg' });
                     }
                 })
                 .catch(err => {
@@ -103,14 +106,23 @@ router.get('/:id/edit', ensureAuthenticated, ensureUser, (req, res) => {
 });
 router.put('/:id', ensureAuthenticated, ensureUser, (req, res) => {
     ShG.findByIdAndUpdate(req.params.id, req.body.research)
-        .then(research => {
-            req.flash('success_msg', 'Данные исследования успешно изменены.')
-            res.redirect('/shg');
-        })
-        .catch(err => {
-            req.flash('error_msg', `Возникла критическая ошибка. Попробуйте повторить операцию позже.`);
-            res.redirect('/shg');
-        });
+    .then(research => {
+        ShGcalcs.findOne({ research: research._id })
+            .then(calc => {
+                if (calc) {
+                    let calcs = calculateShG(research);
+                    ShGcalcs.findByIdAndUpdate(calc._id, calcs)
+                        .then(newCalcs => {
+                            req.flash('success_msg', 'Данные исследования успешно изменены.')
+                            res.redirect('/shg');
+                        })
+                }
+            })
+    })
+    .catch(err => {
+        req.flash('error_msg', `Возникла критическая ошибка. Попробуйте повторить операцию позже.`);
+        res.redirect('/shg');
+    });
 });
 router.delete('/:id', ensureAuthenticated, ensureUser, (req, res) => {
     ShG.findByIdAndDelete(req.params.id)

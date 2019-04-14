@@ -3,10 +3,13 @@ const router = express.Router();
 const mongose = require('mongoose');
 require('../../models/PR');
 const PR = mongose.model('prResearches');
+require('../../models/PRCalcs');
+const PRCalcs = mongose.model('prCalcs');
 require('../../models/Student');
 const Student = mongose.model('students');
 const { searchResearches, formGroups, formForStudent } = require('../../heplers/search');
 const { ensureAuthenticated, ensureUser } = require('../../heplers/auth');
+const { calculatePR } = require('../../heplers/calcs');
 let searchParams;
 router.get('/add', ensureAuthenticated, ensureUser, (req, res) => {
     res.render('researches/pr/add');
@@ -25,10 +28,10 @@ router.get('/', ensureAuthenticated, (req, res) => {
                     if (searchParams) {
                         result = searchResearches(researches, searchParams);
                         searchParams = undefined;
-                        res.render('researches/pr/index', { researches: result, students: students, groups: groups, way: '/pr', way2: '/analysis/pr/perform' });
+                        res.render('researches/pr/index', { researches: result, students: students, groups: groups, way: '/pr', way2: '/pr', way3: '/pr' });
                     }
                     else {
-                        res.render('researches/pr/index', { researches: researches, students: students, groups: groups, way: '/pr', way2: '/analysis/pr/perform' });
+                        res.render('researches/pr/index', { researches: researches, students: students, groups: groups, way: '/pr', way2: '/pr', way3: '/pr' });
                     }
                 })
                 .catch(err => {
@@ -80,7 +83,7 @@ router.post('/', ensureAuthenticated, ensureUser, async (req, res) => {
             res.redirect('/pr');
         });
     if (errors.length > 0) {
-        res.render('researches/pr/add', {errors: errors, research: newResearch });
+        res.render('researches/pr/add', { errors: errors, research: newResearch });
     }
 });
 router.get('/:id/edit', ensureAuthenticated, ensureUser, (req, res) => {
@@ -103,8 +106,17 @@ router.get('/:id/edit', ensureAuthenticated, ensureUser, (req, res) => {
 router.put('/:id', ensureAuthenticated, ensureUser, (req, res) => {
     PR.findByIdAndUpdate(req.params.id, req.body.research)
         .then(research => {
-            req.flash('success_msg', 'Данные исследования успешно изменены.')
-            res.redirect('/pr');
+            PRCalcs.findOne({ research: research._id })
+                .then(calc => {
+                    if (calc) {
+                        let calcs = calculatePR(research);
+                        PRCalcs.findByIdAndUpdate(calc._id, calcs)
+                            .then(newCalcs => {
+                                req.flash('success_msg', 'Данные исследования успешно изменены.')
+                                res.redirect('/pr');
+                            })
+                    }
+                })
         })
         .catch(err => {
             req.flash('error_msg', `Возникла критическая ошибка. Попробуйте повторить операцию позже.`);

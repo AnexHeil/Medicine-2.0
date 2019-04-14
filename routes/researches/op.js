@@ -5,8 +5,13 @@ require('../../models/OP');
 const OP = mongose.model('opResearches');
 require('../../models/Student');
 const Student = mongose.model('students');
+require('../../models/Antropology');
+const Antropology = mongose.model('antropologyResearches');
+const { calculateOP } = require('../../heplers/calcs');
 const { searchResearches, formGroups, formForStudent } = require('../../heplers/search');
 const { ensureAuthenticated, ensureUser } = require('../../heplers/auth');
+require('../../models/OPCalcs');
+const OPCalcs = mongose.model('opCalcs');
 let searchParams;
 router.get('/add', ensureAuthenticated, ensureUser, (req, res) => {
     res.render('researches/op/add');
@@ -25,10 +30,10 @@ router.get('/', ensureAuthenticated, (req, res) => {
                     if (searchParams) {
                         result = searchResearches(researches, searchParams);
                         searchParams = undefined;
-                        res.render('researches/op/index', { researches: result, students: students, groups: groups, way: '/op', way2: '/analysis/op/perform' });
+                        res.render('researches/op/index', { researches: result, students: students, groups: groups, way: '/op', way2: '/op', way3: '/op' });
                     }
                     else {
-                        res.render('researches/op/index', { researches: researches, students: students, groups: groups, way: '/op', way2: '/analysis/op/perform' });
+                        res.render('researches/op/index', { researches: researches, students: students, groups: groups, way: '/op', way2: '/op', way3: '/op' });
                     }
                 })
                 .catch(err => {
@@ -80,7 +85,7 @@ router.post('/', ensureAuthenticated, ensureUser, async (req, res) => {
             res.redirect('/op');
         });
     if (errors.length > 0) {
-        res.render('researches/op/add', {errors: errors, research: newResearch });
+        res.render('researches/op/add', { errors: errors, research: newResearch });
     }
 });
 router.get('/:id/edit', ensureAuthenticated, ensureUser, (req, res) => {
@@ -101,10 +106,26 @@ router.get('/:id/edit', ensureAuthenticated, ensureUser, (req, res) => {
         });
 });
 router.put('/:id', ensureAuthenticated, ensureUser, (req, res) => {
-    OP.findByIdAndUpdate(req.params.id, req.body.research)
+    OP.findByIdAndUpdate(req.params.id, req.body.research, { new: true })
+        .populate('student')
         .then(research => {
-            req.flash('success_msg', 'Данные исследования успешно изменены.')
-            res.redirect('/op');
+            OPCalcs.findOne({ research: research._id })
+                .then(opcalcs => {
+                    console.log(opcalcs);
+                    if (opcalcs) {
+                        Antropology.findOne({ student: research.student._id, researchDate: research.researchDate })
+                            .then(antropology => {
+                                if (antropology) {
+                                    let calcs = calculateOP(research, research.student, antropology);
+                                    OPCalcs.findOneAndUpdate({ research: research._id }, calcs, { new: true })
+                                        .then(calc => {
+                                            req.flash('success_msg', 'Данные исследования успешно изменены.')
+                                            res.redirect('/op');
+                                        });
+                                }
+                            })
+                    }
+                })
         })
         .catch(err => {
             req.flash('error_msg', `Возникла критическая ошибка. Попробуйте повторить операцию позже.`);

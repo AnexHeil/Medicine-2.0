@@ -30,10 +30,10 @@ router.get('/', ensureAuthenticated, (req, res) => {
                     if (searchParams) {
                         result = searchResearches(researches, searchParams);
                         searchParams = undefined;
-                        res.render('researches/morphology/index', { researches: result, students: students, groups: groups, way: '/morphology', way2: '/analysis/antrmorph/perform' });
+                        res.render('researches/morphology/index', { researches: result, students: students, groups: groups, way: '/morphology', way2: '/antrmorph', way3: '/morphology' });
                     }
                     else {
-                        res.render('researches/morphology/index', { researches: researches, students: students, groups: groups, way: '/morphology', way2: '/analysis/antrmorph/perform' });
+                        res.render('researches/morphology/index', { researches: researches, students: students, groups: groups, way: '/morphology', way2: '/antrmorph', way3: '/morphology' });
                     }
                 })
                 .catch(err => {
@@ -85,7 +85,7 @@ router.post('/', ensureAuthenticated, ensureUser, async (req, res) => {
             res.redirect('/morphology');
         });
     if (errors.length > 0) {
-        res.render('researches/morphology/add', {errors: errors, research: newResearch });
+        res.render('researches/morphology/add', { errors: errors, research: newResearch });
     }
 });
 router.get('/:id/edit', ensureAuthenticated, ensureUser, (req, res) => {
@@ -106,28 +106,30 @@ router.get('/:id/edit', ensureAuthenticated, ensureUser, (req, res) => {
         });
 });
 router.put('/:id', ensureAuthenticated, ensureUser, (req, res) => {
-    Morphology.findByIdAndUpdate(req.params.id, req.body.research, {new: true})
+    Morphology.findByIdAndUpdate(req.params.id, req.body.research, { new: true })
         .then(morphology => {
-            Antropology.findOne({researchDate: morphology.researchDate, student: morphology.student})
-                .then(antropology =>{
-                    if(antropology){
-                        AntrMorphCalc.findOne({research: antropology._id})
-                            .then(data =>{
-                                if(data){
+            Antropology.findOne({ researchDate: morphology.researchDate, student: morphology.student })
+                .then(antropology => {
+                    if (antropology) {
+                        AntrMorphCalc.findOne({ research: antropology._id })
+                            .then(data => {
+                                if (data) {
                                     let analysis = calculateAntrMorphData(antropology, morphology);
                                     AntrMorphCalc.findByIdAndUpdate(data._id, analysis)
+                                        .then(newCalcs => {
+                                            req.flash('success_msg', 'Данные исследования успешно изменены.')
+                                            res.redirect('/morphology');
+                                        })
                                 }
                             })
                     }
                 })
-            req.flash('success_msg', 'Данные исследования успешно изменены.')
-            res.redirect('/morphology');
         })
         .catch(err => {
             req.flash('error_msg', `Возникла критическая ошибка. Попробуйте повторить операцию позже.`);
             res.redirect('/morphology');
         });
-        
+
 });
 router.delete('/:id', ensureAuthenticated, ensureUser, (req, res) => {
     Morphology.findByIdAndDelete(req.params.id)

@@ -79,15 +79,15 @@ router.post('/', ensureAuthenticated, (req, res) => {
                 }
                 isExist = false;
             }
-            // if(!research[0].studentID){
-            //     for(let i = 0; i < students.length; i++){
-            //         if (JSON.stringify(research[0][Object.keys(research[0])[1]]) == JSON.stringify(students[i].studentNumber)) {
-            //             isExist = true;
-            //             research[0].studentID = students[i]._id;
-            //             break;
-            //         }
-            //     }
-            // }
+            if(!research[0].studentID){
+                for(let i = 0; i < students.length; i++){
+                    if (JSON.stringify(research[0][Object.keys(research[0])[1]]) == JSON.stringify(students[i].studentNumber)) {
+                        isExist = true;
+                        research[0].studentID = students[i]._id;
+                        break;
+                    }
+                }
+            }
             Model.find({})
                 .then(existingResearches => {
                     isExist = false;

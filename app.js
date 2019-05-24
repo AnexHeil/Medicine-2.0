@@ -32,6 +32,7 @@ const shgCacls = require('./routes/analysis/shg');
 const opCacls = require('./routes/analysis/op');
 const spyroCacls = require('./routes/analysis/spyro');
 const ecgCalcs = require('./routes/analysis/ecg');
+const importion = require('./routes/researches/import');
 require('./config/passport')(passport);
 
 const {
@@ -92,6 +93,7 @@ app.use('/analysis/shg', shgCacls);
 app.use('/analysis/op', opCacls);
 app.use('/analysis/spyro', spyroCacls);
 app.use('/analysis/ecg', ecgCalcs);
+app.use('/import', importion);
 
 
 const port = process.env.port || 3000;

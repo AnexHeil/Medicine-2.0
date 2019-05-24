@@ -3,44 +3,61 @@
         <div class="inline-div">
             <div class="form-group">
                 <label for="studentNumber">Номер студенческого билета осбледуемого</label>
-                <input type="text" name="studentNumber" class="form-control" value="{{research.student.studentNumber}}" readonly>
+                <input type="text" name="studentNumber" class="form-control" value="{{research.student.studentNumber}}"
+                    readonly>
             </div>
             <div class="form-group">
                 <label for="stayHeight">Рост стоя</label>
-                <input type="text" name="research[stayHeight]" class="form-control" value="{{research.stayHeight}}" required>
+                <input type="text" name="research[stayHeight]" class="form-control" value="{{research.stayHeight}}"
+                    required>
             </div>
             <div class="form-group">
                 <label for="sitHeight">Рост сидя</label>
-                <input type="text" name="research[sitHeight]" class="form-control" value="{{research.sitHeight}}" required>
+                <input type="text" name="research[sitHeight]" class="form-control" value="{{research.sitHeight}}"
+                    required>
             </div>
             <div class="form-group">
                 <label for="handWidth">Размах рук</label>
-                <input type="text" name="research[handWidth]" class="form-control" value="{{research.handWidth}}" required>
+                <input type="text" name="research[handWidth]" class="form-control" value="{{research.handWidth}}"
+                    required>
             </div>
-        </div>
-        <div class="inline-div">
             <div class="form-group">
                 <label for="weight">Вес</label>
                 <input type="text" name="research[weight]" class="form-control" value="{{research.weight}}" required>
             </div>
+        </div>
+        <div class="inline-div">
             <div class="form-group">
                 <label for="chestOnBreath">Объём грудной клетки в покое</label>
-                <input type="text" name="research[chestOnBreath]" class="form-control" value="{{research.chestOnBreath}}" required>
+                <input type="text" name="research[chestOnBreath]" class="form-control"
+                    value="{{research.chestOnBreath}}" required>
             </div>
             <div class="form-group">
                 <label for="chestOnFullBreath">Объём грудной клетки при полном вдохе</label>
-                <input type="text" name="research[chestOnFullBreath]" class="form-control" value="{{research.chestOnFullBreath}}" required>
+                <input type="text" name="research[chestOnFullBreath]" class="form-control"
+                    value="{{research.chestOnFullBreath}}" required>
             </div>
             <div class="form-group">
                 <label for="chestOnMaxBreath">Объём грудной клетки при макс. вдохе</label>
-                <input type="text" name="research[chestOnMaxBreath]" class="form-control" value="{{research.chestOnMaxBreath}}" required>
+                <input type="text" name="research[chestOnMaxBreath]" class="form-control"
+                    value="{{research.chestOnMaxBreath}}" required>
+            </div>
+            <div class="form-group">
+                <label for="chestOnFullBreath">Объём талии</label>
+                <input type="text" name="research[beltVolume]" class="form-control"
+                    value="{{research.beltVolume}}" required>
+            </div>
+            <div class="form-group">
+                <label for="chestOnMaxBreath">Объём бедра</label>
+                <input type="text" name="research[chestVolume]" class="form-control"
+                    value="{{research.hipVolume}}" required>
             </div>
         </div>
     </div>
     <div class="form-group">
         <label for="researchDate">Дата проведения обследования</label>
-        <input type="date" name="research[researchDate]" class="form-control" value="{{formatDate research.researchDate "YYYY-MM-DD"}}"
-            required>
+        <input type="date" name="research[researchDate]" class="form-control"
+            value="{{formatDate research.researchDate "YYYY-MM-DD"}}" required>
     </div>
     <div class="form-group third-width">
         <input class="form-control btn btn-lg btn-primary" type="submit" value="Готово">

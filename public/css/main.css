@@ -26,6 +26,9 @@ nav{
     transform: scale(1.5);
     margin: 0 10px;
 }
+table{
+    height: 70%;
+}
 .table-responsive{
     overflow-y: auto;
     margin-top: 10px;
@@ -192,4 +195,13 @@ nav{
 .reportWindow h5{
     text-align: center;
     width:100%;
+}
+
+input[type="file"]{
+    height: 44px;
+}
+.fourth-width{
+    display: inline-block;
+    width: 49.8%;
+    margin: 0;
 }

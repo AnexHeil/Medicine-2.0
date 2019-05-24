@@ -35,6 +35,14 @@ const AntropologyResearchSchema = new Schema({
         type: Number,
         required: true
     },
+    beltVolume: {
+        type: Number,
+        required: true
+    },
+    hipVolume: {
+        type: Number,
+        required: true
+    },
     researchDate: {
         type: Date,
         required: true

@@ -18,6 +18,8 @@
                 </th>
                 <th data-tooltip = "Объём грудной клетки при макс. вдохе" class="table-column-header helper">ОГК макс.<i class="arrow fa fa-sort"></i>
                 </th>
+                <th data-tooltip = "Объём талии" class="table-column-header helper">ОТ <i class="arrow fa fa-sort"></i></th>
+                <th data-tooltip = "Объём бедра" class="table-column-header helper">ОБ <i class="arrow fa fa-sort"></i></th>
                 <th class="table-column-header">Дата обследования <i class="arrow fa fa-sort"></i></th>
                 <th colspan="2" class="operations">Операции</th>
             </tr>
@@ -37,8 +39,9 @@
                 <td>{{chestOnBreath}}</td>
                 <td>{{chestOnFullBreath}}</td>
                 <td>{{chestOnMaxBreath}}</td>
+                <td>{{beltVolume}}</td>
+                <td>{{hipVolume}}</td>
                 <td>{{formatDate researchDate 'DD-MM-YYYY'}}</td>
-
                 <td>
                     <a class="btn btn-xs btn-warning" href="/antropology/{{_id}}/edit">Изменить</a>
                 </td>

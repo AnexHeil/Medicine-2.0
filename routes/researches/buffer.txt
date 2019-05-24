@@ -1,0 +1,40 @@
+Model = antropology;
+                    Antropology.find({})
+                        .then(antropology => {
+                            isExist = false;
+                            // console.log(antropology[4].researchDate.getTime() == new Date(req.body.date).getTime());
+                            // console.log(antropology[4].researchDate.getTime()); 
+                            // console.log(new Date(req.body.date).getTime());
+                            for(let i = 0; i < antropology.length; i++){
+                                for(let j = 0; j < research.length; j++){
+                                    if(JSON.stringify(antropology[i].student) == JSON.stringify(research[j].studentID) && new Date(req.body.date).getTime() == antropology[i].researchDate.getTime()){
+                                        research.splice(j, 1);
+                                        break;
+                                    }
+                                }
+                            }
+                            for (let i = 0; i < research.length; i++) {
+                                data.push({
+                                    student: research[i].studentID,
+                                    stayHeight: research[i][Object.keys(research[i])[2]],
+                                    sitHeight: research[i][Object.keys(research[i])[3]],
+                                    handWidth: research[i][Object.keys(research[i])[4]],
+                                    weight: research[i][Object.keys(research[i])[5]],
+                                    chestOnBreath: research[i][Object.keys(research[i])[6]],
+                                    chestOnFullBreath: research[i][Object.keys(research[i])[7]],
+                                    chestOnMaxBreath: research[i][Object.keys(research[i])[8]],
+                                    beltVolume: research[i][Object.keys(research[i])[9]],
+                                    hipVolume: research[i][Object.keys(research[i])[10]],
+                                    researchDate: req.body.date
+                                });
+                            }
+                            Antropology.insertMany(data)
+                                .then(data => {
+                                    req.flash('success_msg', 'Импрот атропологического обследования успешно завершён');
+                                    res.redirect('/antropology');
+                                })
+                                .catch(err => {
+                                    req.flash('error_msg', `Возникла критическая ошибка. Попробуйте повторить операцию позже.`);
+                                    res.redirect('/antroplogy');
+                                });
+                        });

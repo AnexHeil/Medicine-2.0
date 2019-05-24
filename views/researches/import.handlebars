@@ -1,0 +1,19 @@
+<form action="/import" method="POST">
+    <div class="form-group">
+        <select class="custom-select fourth-width mt0" name="research" id="" required>
+            <option value="header">Выберите обследование</option>
+            <option class="search-option" value="antr">Антропометрия</option>
+            <option class="search-option" value="morph">Мофрология</option>
+            <option class="search-option" value="spyro">Спирография</option>
+            <option class="search-option" value="shg">Проба Штанге/Генчи</option>
+            <option class="search-option" value="pr">Проба Руфье</option>
+            <option class="search-option" value="ecg">ЭКГ</option>
+            <option class="search-option" value="op">Ортостатическая проба</option>
+        </select>
+        <input class="custom-select  form-control fourth-width mt0" type="date" name="date" required>
+    </div>
+    <div class="form-group">
+        <input class="form-control" name="file" type="file" required>
+        <button class="btn btn-large btn-primary full-btn mt-2">Импорт</button>
+    </div>
+</form>

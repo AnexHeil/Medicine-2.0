@@ -15,6 +15,8 @@ require('../../models/ShG');
 const ShG = mongose.model('shGResearches');
 require('../../models/Spyro');
 const Spyro = mongose.model('spyroResearches');
+require('../../models/Physics');
+const Physics = mongose.model('physicResearches');
 require('../../models/Student');
 const Student = mongose.model('students');
 const XLSX = require('xlsx');
@@ -61,6 +63,14 @@ router.post('/', ensureAuthenticated, (req, res) => {
                 case 'op':
                     Model = OP;
                     index = 6;
+                    break;
+                case 'op':
+                    Model = OP;
+                    index = 6;
+                    break;
+                case 'physics':
+                    Model = Physics;
+                    index = 7;
                     break;
             };
             let research = XLSX.utils.sheet_to_json(workbook.Sheets[workbook.SheetNames[index]]);
@@ -141,6 +151,12 @@ router.post('/', ensureAuthenticated, (req, res) => {
                             Model = OP;
                             backflip = '/op';
                             message = 'ОП'
+                            break;
+                        case 'op':
+                            data = formPhysicData(research, req.body.date);
+                            Model = OP;
+                            backflip = '/physics';
+                            message = 'Физического'
                             break;
                     };
                     Model.insertMany(data)
@@ -276,6 +292,26 @@ function formOPData(research, date) {
             p2: research[i][Object.keys(research[i])[7]],
             sad2: research[i][Object.keys(research[i])[8]],
             dad2: research[i][Object.keys(research[i])[9]],
+            researchDate: date
+        });
+    }
+    return data;
+}
+function formOPData(research, date) {
+    data = [];
+    for (let i = 0; i < research.length; i++) {
+        data.push({
+            student: research[i].studentID,
+            run30m: research[i][Object.keys(research[i])[2]],
+            jump: research[i][Object.keys(research[i])[3]],
+            chelnRun: research[i][Object.keys(research[i])[4]],
+            press: research[i][Object.keys(research[i])[4]],
+            run1000: research[i][Object.keys(research[i])[5]],
+            push: research[i][Object.keys(research[i])[6]],
+            incline: research[i][Object.keys(research[i])[7]],
+            stanDinam: research[i][Object.keys(research[i])[8]],
+            wristDinamRight: research[i][Object.keys(research[i])[9]],
+            wristDinamLeft: research[i][Object.keys(research[i])[9]],
             researchDate: date
         });
     }

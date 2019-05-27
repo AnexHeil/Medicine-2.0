@@ -30,5 +30,9 @@ module.exports = {
         if(report){
             return 'report-table';
         }
+    },
+    ifphysics: function(way){
+        if(way == '/physics')
+            return 'hidden';
     }
 };

@@ -17,6 +17,7 @@ require('./models/Spyro');
 require('./models/OP');
 require('./models/PR');
 require('./models/ShG');
+require('./models/Physics');
 const users = require('./routes/users');
 const students = require('./routes/students');
 const antropology = require('./routes/researches/antropology');
@@ -26,6 +27,7 @@ const spyro = require('./routes/researches/spyro');
 const op = require('./routes/researches/op');
 const shg = require('./routes/researches/shg');
 const pr = require('./routes/researches/pr');
+const physic = require('./routes/researches/physics');
 const antrmorphCalcs = require('./routes/analysis/antrmorph');
 const prCacls = require('./routes/analysis/pr');
 const shgCacls = require('./routes/analysis/shg');
@@ -41,7 +43,8 @@ const {
     checkStatus,
     createHeader,
     selectResearch,
-    reportTable
+    reportTable,
+    ifphysics
 } = require('./heplers/hbs');
 mongoose.connect('mongodb://Heil:135928a@ds163835.mlab.com:63835/medicine-dev', { useNewUrlParser: true })
     .then(() => {
@@ -55,7 +58,8 @@ app.engine('handlebars', exhbs({helpers: {
     checkStatus: checkStatus,
     createHeader: createHeader,
     selectResearch, selectResearch,
-    reportTable: reportTable
+    reportTable: reportTable,
+    ifphysics: ifphysics
 },  defaultLayout: 'main'}));
 app.set('view engine', 'handlebars');
 
@@ -95,6 +99,7 @@ app.use('/spyro', spyro);
 app.use('/shg', shg);
 app.use('/op', op);
 app.use('/pr', pr);
+app.use('/physics', physic);
 app.use('/analysis/antrmorph', antrmorphCalcs);
 app.use('/analysis/pr', prCacls);
 app.use('/analysis/shg', shgCacls);

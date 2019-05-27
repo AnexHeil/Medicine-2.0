@@ -1,0 +1,64 @@
+{{#if report}}
+{{>_select}}
+{{else}}
+{{>_dashboard}}
+{{>_add}}
+{{/if}}
+<div class="table-responsive">
+    <table class="table table-bordered table-hover table-sm {{reportTable report}}">
+        <thead class="thead-dark">
+            <tr>
+                <th class="table-column-header">Фамилия <i class="arrow fa fa-sort"></i></th>
+                <th class="table-column-header">Имя <i class="arrow fa fa-sort"></i></th>
+                <th class="table-column-header">Отчество <i class="arrow fa fa-sort"></i></th>
+                <th class="table-column-header">№ студ. билета <i class="arrow fa fa-sort"></i></th>
+                <th class="table-column-header">Группа <i class="arrow fa fa-sort"></i></th>
+                <th class="table-column-header">Бег на 30 м, с <i class="arrow fa fa-sort"></i></th>
+                <th class="table-column-header helper" data-tooltip="Прыжок в длину с места">ПВД, см <i class="arrow fa fa-sort"></i></th>
+                <th class="table-column-header helper" data-tooltip="Челночный бег 4х10 м">ЧБ, с <i class="arrow fa fa-sort"></i></th>
+                <th class="table-column-header helper" data-tooltip="Сгибание туловища из положения лёжа">СТЛ <i class="arrow fa fa-sort"></i></th>
+                <th class="table-column-header">Бег 1000 м, мин <i class="arrow fa fa-sort"></i></th>
+                <th class="table-column-header helper" data-tooltip="Сгибание и разгибание рук в положении лёжа">СРРЛ<sub>1</sub> <i class="arrow fa fa-sort"></i></th>
+                <th class="table-column-header helper" data-tooltip="Наклон вперёд из положения сидя">Наклон, см<i class="arrow fa fa-sort"></i></th>
+                <th class="table-column-header helper" data-tooltip="Становая динамометрия">СД, кг <i class="arrow fa fa-sort"></i></th>
+                <th class="table-column-header helper" data-tooltip="Кистевая динамометрия (правая кисть)">КД П, кг <i class="arrow fa fa-sort"></i></th>
+                <th class="table-column-header helper" data-tooltip="Кистевая динамометрия (левая кисть)">КД Л, кг <i class="arrow fa fa-sort"></i></th>
+                <th class="table-column-header date-col">Дата обследования <i class="arrow fa fa-sort"></i></th>
+                <th colspan="2" class="operations">Операции</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each researches}}
+            <tr>
+                <td>{{student.lastName}}</td>
+                <td>{{student.firstName}}</td>
+                <td>{{student.patronymic}}</td>
+                <td>{{student.studentNumber}}</td>
+                <td>{{student.group}}</td>
+                <td>{{run30m}}</td>
+                <td>{{jump}}</td>
+                <td>{{chelnRun}}</td>
+                <td>{{press}}</td>
+                <td>{{run1000}}</td>
+                <td>{{push}}</td>
+                <td>{{incline}}</td>
+                <td>{{stanDinam}}</td>
+                <td>{{wristDinamRight}}</td>
+                <td>{{wristDinamLeft}}</td>
+                <td>{{formatDate researchDate 'DD-MM-YYYY'}}</td>
+                <td>
+                    <a class="btn btn-xs btn-warning" href="/physics/{{_id}}/edit">Изменить</a>
+                </td>
+                <td class="delete-td">
+                    <form class="inline-form" action="/physics/{{_id}}?_method=DELETE" method="POST">
+                        <button class="btn btn-xs btn-danger">Удалить</button>
+                    </form>
+                </td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</div>
+{{#if report}}
+<div id="chartContainer" style="height: 370px; width: 100%;"></div>
+{{/if}}

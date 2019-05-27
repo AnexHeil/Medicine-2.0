@@ -1,0 +1,60 @@
+<form action="/physics" method="POST">
+    <div class="form-group">
+        <label for="studentNumber">Номер студенческого билета осбледуемого</label>
+        <input type="text" name="studentNumber" class="form-control" value="{{research.student.studentNumber}}" autofocus required>
+    </div>
+    <div class="flex-box">
+        <div class="inline-div">
+            <div class="form-group">
+                <label for="run30m">Бег на 30 м, с</label>
+                <input type="text" name="research[run30m]" class="form-control" value="{{research.run30m}}" required>
+            </div>
+            <div class="form-group">
+                <label for="jump">Прыжок в длину с места, см</label>
+                <input type="text" name="research[jump]" class="form-control" value="{{research.jump}}" required>
+            </div>
+            <div class="form-group">
+                <label for="chelnRun">Челночный бег 4х10 м</label>
+                <input type="text" name="research[chelnRun]" class="form-control" value="{{research.chelnRun}}" required>
+            </div>
+            <div class="form-group">
+                <label for="press">Сгибание туловища из положения лёжа</label>
+                <input type="text" name="research[press]" class="form-control" value="{{research.press}}" required>
+            </div>
+            <div class="form-group">
+                <label for="run1000">Бег на 1000 м, мин</label>
+                <input type="text" name="research[run1000]" class="form-control" value="{{research.run1000}}" required>
+            </div>
+        </div>
+        <div class="inline-div">
+            <div class="form-group">
+                <label for="push">Сгибание и разгибание рук в упоре лёжа</label>
+                <input type="text" name="research[push]" class="form-control" value="{{research.push}}" required>
+            </div>
+            <div class="form-group">
+                <label for="incline">Наклон вперёд из положения сидя, см</label>
+                <input type="text" name="research[incline]" class="form-control" value="{{research.incline}}" required>
+            </div>
+            <div class="form-group">
+                <label for="stanDinam">Становая динамометрия, кг</label>
+                <input type="text" name="research[stanDinam]" class="form-control" value="{{research.stanDinam}}" required>
+            </div>
+            <div class="form-group">
+                <label for="wristDinamRight">Кистевая динамометрия (правая кисть), кг</label>
+                <input type="text" name="research[wristDinamRight]" class="form-control" value="{{research.wristDinamRight}}" required>
+            </div>
+            <div class="form-group">
+                <label for="wristDinamLeft">Кистевая динамометрия (левая кисть), кг</label>
+                <input type="text" name="research[wristDinamLeft]" class="form-control" value="{{research.wristDinamLeft}}" required>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="researchDate">Дата проведения обследования</label>
+        <input type="date" name="research[researchDate]" class="form-control"
+            value="{{formatDate research.researchDate "YYYY-MM-DD"}}" required>
+    </div>
+    <div class="form-group">
+        <input class="form-control btn btn-lg btn-primary" type="submit" value="Готово">
+    </div>
+</form>

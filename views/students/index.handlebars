@@ -6,8 +6,9 @@
             <th class="table-column-header">Имя <i class="arrow fa fa-sort"></i></th>
             <th class="table-column-header">Отчество <i class="arrow fa fa-sort"></i></th>
             <th class="table-column-header">Группа <i class="arrow fa fa-sort"></i></th>
-            <th class="table-column-header">Дата рождения <i class="arrow fa fa-sort"></i></th>
+            <th class="table-column-header date-col">Дата рождения <i class="arrow fa fa-sort"></i></th>
             <th class="table-column-header">Пол <i class="arrow fa fa-sort"></i></th>
+            <th class="table-column-header">Отчёт</th>
             <th class= "operations">Операции</th>
         </tr>
     </thead>
@@ -21,6 +22,7 @@
             <td>{{group}}</td>
             <td>{{formatDate birthDate 'DD-MM-YYYY'}}</td>
             <td>{{sex}}</td>
+            <td><a class="btn btn-xs btn-dark" href="/students/{{_id}}/report">Отчёт</a></td>
             <td>
                 <a class="btn btn-xs btn-warning" href="/students/{{_id}}/edit">Изменить</a>
                 <form class="inline-form" action="/students/{{_id}}?_method=DELETE" method="POST">

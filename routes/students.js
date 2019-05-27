@@ -10,6 +10,20 @@ const User = mongoose.model('users');
 const Excel = require('exceljs');
 const XLSX = require('xlsx');
 const Path = require('path');
+require('../models/Antropology');
+const Antropology = mongoose.model('antropologyResearches');
+require('../models/Morphology');
+const Morphology = mongoose.model('morphologyResearches');
+require('../models/ECG');
+const ECG = mongoose.model('ecgResearches');
+require('../models/OP');
+const OP = mongoose.model('opResearches');
+require('../models/PR');
+const PR = mongoose.model('prResearches');
+require('../models/ShG');
+const ShG = mongoose.model('shGResearches');
+require('../models/Spyro');
+const Spyro = mongoose.model('spyroResearches');
 
 router.get('/', ensureAuthenticated, ensureUser, (req, res) => {
     Student.find()
@@ -164,7 +178,48 @@ router.post('/import', ensureAuthenticated, (req, res) => {
             }
             else
                 req.flash('msg_success', 'Импорт списка студентов успешно завершён.')
-                res.redirect('/students');
+            res.redirect('/students');
+        });
+});
+
+router.get('/:id/report', ensureAuthenticated, ensureUser, (req, res) => {
+    res.render('students/report', {id: req.params.id});
+});
+router.get('/:id/report/:research', ensureAuthenticated, ensureUser, (req, res) =>{
+    let Model;
+    switch (req.params.research) {
+        case 'antropology':
+            Model = Antropology;
+            break;
+        case 'morphology':
+            Model = Morphology;
+            break;
+        case 'spyro':
+            Model = Spyro;
+            break;
+        case 'shg':
+            Model = ShG;
+            break;
+        case 'pr':
+            Model = PR;
+            break;
+        case 'ecg':
+            Model = ECG;
+            break;
+        case 'op':
+            Model = OP;
+            break;
+    };
+    Model.find({student: req.params.id})
+        .populate('student')
+        .then(researches =>{
+            if(researches.length > 0){
+                res.render(`researches/${req.params.research}/index`, {researches: researches, id: req.params.id, report: true, selected: req.params.research});
+            }
+            else{
+                req.flash('error_msg', 'Для указанного студента данне обследований отстутствуют.');
+                res.redirect(`/students/${req.params.id}/report`)
+            }
         });
 });
 

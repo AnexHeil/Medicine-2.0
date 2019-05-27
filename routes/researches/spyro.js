@@ -113,13 +113,23 @@ router.put('/:id', ensureAuthenticated, ensureUser, (req, res) => {
                     if (calc) {
                         Antropology.findOne({ student: research.student, researchDate: research.researchDate })
                             .then(antropology => {
-                                let calcs = calculateSpyro(antropology.weight, research);
-                                SpyroCalc.findByIdAndUpdate(calc._id, calcs)
-                                    .then(spyro => {
-                                        req.flash('success_msg', 'Данные исследования успешно изменены.')
-                                        res.redirect('/spyro');
-                                    })
+                                if (antropology) {
+                                    let calcs = calculateSpyro(antropology.weight, research);
+                                    SpyroCalc.findByIdAndUpdate(calc._id, calcs)
+                                        .then(spyro => {
+                                            req.flash('success_msg', 'Данные исследования успешно изменены.')
+                                            res.redirect('/spyro');
+                                        })
+                                }
+                                else {
+                                    req.flash('success_msg', 'Данные исследования успешно изменены.')
+                                    res.redirect('/spyro');
+                                }
                             })
+                    }
+                    else {
+                        req.flash('success_msg', 'Данные исследования успешно изменены.')
+                        res.redirect('/pr');
                     }
                 })
         })

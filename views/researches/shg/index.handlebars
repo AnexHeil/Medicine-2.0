@@ -1,7 +1,11 @@
+{{#if report}}
+{{>_select}}
+{{else}}
 {{>_dashboard}}
 {{>_add}}
+{{/if}}
 <div class="table-responsive">
-    <table class="table table-bordered table-hover table-sm">
+    <table class="table table-bordered table-hover table-sm {{reportTable report}}">
         <thead class="thead-dark">
             <tr>
                 <th class="table-column-header">Фамилия <i class="arrow fa fa-sort"></i></th>
@@ -11,7 +15,7 @@
                 <th class="table-column-header">Группа <i class="arrow fa fa-sort"></i></th>
                 <th class="table-column-header">Штанге <i class="arrow fa fa-sort"></i></th>
                 <th class="table-column-header">Генчи <i class="arrow fa fa-sort"></i></th>
-                <th class="table-column-header">Дата обследования <i class="arrow fa fa-sort"></i></th>
+                <th class="table-column-header date-col">Дата обследования <i class="arrow fa fa-sort"></i></th>
                 <th colspan="2" class="operations">Операции</th>
             </tr>
         </thead>

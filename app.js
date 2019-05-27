@@ -37,7 +37,11 @@ require('./config/passport')(passport);
 
 const {
     formatDate,
-    checkSex
+    checkSex,
+    checkStatus,
+    createHeader,
+    selectResearch,
+    reportTable
 } = require('./heplers/hbs');
 mongoose.connect('mongodb://Heil:135928a@ds163835.mlab.com:63835/medicine-dev', { useNewUrlParser: true })
     .then(() => {
@@ -45,10 +49,14 @@ mongoose.connect('mongodb://Heil:135928a@ds163835.mlab.com:63835/medicine-dev', 
     })
     .catch((err) => console.log(err));;
 
-app.engine('handlebars', exhbs({ defaultLayout: 'main', helpers: {
+app.engine('handlebars', exhbs({helpers: {
     formatDate: formatDate,
-    checkSex: checkSex
-}}));
+    checkSex: checkSex,
+    checkStatus: checkStatus,
+    createHeader: createHeader,
+    selectResearch, selectResearch,
+    reportTable: reportTable
+},  defaultLayout: 'main'}));
 app.set('view engine', 'handlebars');
 
 app.use(express.static(__dirname + '/public'));

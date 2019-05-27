@@ -83,7 +83,7 @@ router.post('/', ensureAuthenticated, ensureUser, async (req, res) => {
             res.redirect('/shg');
         });
     if (errors.length > 0) {
-        res.render('researches/shg/add', {errors: errors, research: newResearch });
+        res.render('researches/shg/add', { errors: errors, research: newResearch });
     }
 });
 
@@ -106,23 +106,27 @@ router.get('/:id/edit', ensureAuthenticated, ensureUser, (req, res) => {
 });
 router.put('/:id', ensureAuthenticated, ensureUser, (req, res) => {
     ShG.findByIdAndUpdate(req.params.id, req.body.research)
-    .then(research => {
-        ShGcalcs.findOne({ research: research._id })
-            .then(calc => {
-                if (calc) {
-                    let calcs = calculateShG(research);
-                    ShGcalcs.findByIdAndUpdate(calc._id, calcs)
-                        .then(newCalcs => {
-                            req.flash('success_msg', 'Данные исследования успешно изменены.')
-                            res.redirect('/shg');
-                        })
-                }
-            })
-    })
-    .catch(err => {
-        req.flash('error_msg', `Возникла критическая ошибка. Попробуйте повторить операцию позже.`);
-        res.redirect('/shg');
-    });
+        .then(research => {
+            ShGcalcs.findOne({ research: research._id })
+                .then(calc => {
+                    if (calc) {
+                        let calcs = calculateShG(research);
+                        ShGcalcs.findByIdAndUpdate(calc._id, calcs)
+                            .then(newCalcs => {
+                                req.flash('success_msg', 'Данные исследования успешно изменены.')
+                                res.redirect('/shg');
+                            })
+                    }
+                    else {
+                        req.flash('success_msg', 'Данные исследования успешно изменены.')
+                        res.redirect('/pr');
+                    }
+                })
+        })
+        .catch(err => {
+            req.flash('error_msg', `Возникла критическая ошибка. Попробуйте повторить операцию позже.`);
+            res.redirect('/shg');
+        });
 });
 router.delete('/:id', ensureAuthenticated, ensureUser, (req, res) => {
     ShG.findByIdAndDelete(req.params.id)

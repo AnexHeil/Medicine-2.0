@@ -120,6 +120,10 @@ router.put('/:id', ensureAuthenticated, ensureUser, (req, res) => {
                                 res.redirect('/ecg');
                             })
                     }
+                    else {
+                        req.flash('success_msg', 'Данные исследования успешно изменены.')
+                        res.redirect('/ecg');
+                    }
                 })
         })
         .catch(err => {

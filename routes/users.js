@@ -6,11 +6,12 @@ const passport = require('passport');
 require('../models/User');
 const User = mongoose.model('users');
 const keys = require('../config/keys');
+const {ensureAdmin} = require('../heplers/auth');
 
 router.get('/login', (req, res) => {
     res.render('users/login');
 });
-router.get('/logout', (req, res) =>{
+router.get('/logout', (req, res) => {
     req.logout();
     res.redirect('/');
 })
@@ -25,7 +26,7 @@ router.post('/login', (req, res, next) => {
 
 
 
-router.get('/register', (req, res) => {
+router.get('/register', ensureAdmin, (req, res) => {
     res.render('users/register');
 });
 
@@ -52,11 +53,8 @@ router.post('/register', (req, res) => {
                 if (user) {
                     errors.push({ text: 'Такой пользователь уже существует.' });
                 }
-                if (keys.indexOf(req.body.key) != -1) {
-                    errors.push({ text: 'Ключ регистрации указан неверно. Пожалуйста, убедитесь, что имеете верный ключ' });
-                }
-                if(errors.length > 0){
-                     res.render('users/register', {
+                if (errors.length > 0) {
+                    res.render('users/register', {
                         firstName: req.body.firstName,
                         lastName: req.body.lastName,
                         username: req.body.username,
@@ -79,7 +77,7 @@ router.post('/register', (req, res) => {
                                     status: 'regular'
                                 })
                                     .then(user => {
-                                        req.flash('success_msg', `Регистрация успешна. Добро пожаловать, ${user.firstName} ${user.lastName}`);
+                                        req.flash('success_msg', `Регистрация успешна.`);
                                         req.session.save(function () {
                                             res.redirect('/');
                                         })

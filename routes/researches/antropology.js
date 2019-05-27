@@ -115,13 +115,18 @@ router.get('/:id/edit', ensureAuthenticated, ensureUser, (req, res) => {
         });
 });
 router.put('/:id', ensureAuthenticated, ensureUser, (req, res) => {
+    console.log('done');
     Antropology.findByIdAndUpdate(req.params.id, req.body.research, { new: true })
         .then(antropology => {
+            console.log('done1');
             AntrMorphCalc.findOne({ research: antropology._id })
                 .then(data => {
+                    console.log('done2');
                     if (data) {
+                        console.log('done3');
                         Morphology.findOne({ student: antropology.student, researchDate: antropology.researchDate })
                             .then(morphology => {
+                                console.log('done4');
                                 if (morphology) {
                                     let analysis = calculateAntrMorphData(antropology, morphology);
                                     AntrMorphCalc.findByIdAndUpdate(data._id, analysis)
@@ -130,7 +135,15 @@ router.put('/:id', ensureAuthenticated, ensureUser, (req, res) => {
                                             res.redirect('/antropology');
                                         })
                                 }
+                                else {
+                                    req.flash('success_msg', 'Данные исследования успешно изменены.')
+                                    res.redirect('/antropology');
+                                }
                             });
+                    }
+                    else {
+                        req.flash('success_msg', 'Данные исследования успешно изменены.')
+                        res.redirect('/antropology');
                     }
                 });
         })

@@ -123,7 +123,15 @@ router.put('/:id', ensureAuthenticated, ensureUser, (req, res) => {
                                             res.redirect('/op');
                                         });
                                 }
+                                else {
+                                    req.flash('success_msg', 'Данные исследования успешно изменены.')
+                                    res.redirect('/op');
+                                }
                             })
+                    }
+                    else {
+                        req.flash('success_msg', 'Данные исследования успешно изменены.')
+                        res.redirect('/op');
                     }
                 })
         })

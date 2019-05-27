@@ -116,6 +116,10 @@ router.put('/:id', ensureAuthenticated, ensureUser, (req, res) => {
                                 res.redirect('/pr');
                             })
                     }
+                    else {
+                        req.flash('success_msg', 'Данные исследования успешно изменены.')
+                        res.redirect('/pr');
+                    }
                 })
         })
         .catch(err => {

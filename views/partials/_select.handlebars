@@ -1,0 +1,15 @@
+<form action="/students/{{id}}/report" method="GET">
+    <div class="form-group">
+        <select class="custom-select fourth-width mt0 report-select" name="researchReport"
+            required>
+            <option value="header">Выберите обследование для отчёта</option>
+            <option class="search-option" value="antropology" {{selectResearch selected "antropology"}}>Антропометрия</option>
+            <option class="search-option" value="morphology" {{selectResearch selected "morphology"}}>Мофрология</option>
+            <option class="search-option" value="spyro" {{selectResearch selected "spyro"}}>Спирография</option>
+            <option class="search-option" value="shg" {{selectResearch selected "shg"}}>Проба Штанге/Генчи</option>
+            <option class="search-option" value="pr" {{selectResearch selected "pr"}}>Проба Руфье</option>
+            <option class="search-option" value="ecg" {{selectResearch selected "ecg"}}>ЭКГ</option>
+            <option class="search-option" value="op" {{selectResearch selected "op"}}>Ортостатическая проба</option>
+        </select>
+    </div>
+</form>

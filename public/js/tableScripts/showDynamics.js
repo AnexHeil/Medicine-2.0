@@ -11,7 +11,7 @@ if (table) {
     for (let i = 0; i < tds.length; i++) {
         tds[i].addEventListener('click', function () {
             let index = this.cellIndex;
-            if (index != ths.length && index != ths.length - 1 && index != ths.length - 2) {
+            if (index != ths.length && index != ths.length - 1 && index != ths.length - 2 && index != ths.length - (ths.length -1) && index != ths.length - (ths.length -2) && index != ths.length - (ths.length - 3) && index != 0 && index != ths.length - (ths.length-4)){
                 let rows = table.rows;
                 let dynamicData = [], dates = [];
                 let date;

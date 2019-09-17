@@ -11,13 +11,18 @@ if (table) {
     for (let i = 0; i < tds.length; i++) {
         tds[i].addEventListener('click', function () {
             let index = this.cellIndex;
-            if (index != ths.length && index != ths.length - 1 && index != ths.length - 2 && index != ths.length - (ths.length -1) && index != ths.length - (ths.length -2) && index != ths.length - (ths.length - 3) && index != 0 && index != ths.length - (ths.length-4)){
+            if (index != ths.length && index != ths.length - 1 && index != ths.length - 2 && index != ths.length - (ths.length - 1) && index != ths.length - (ths.length - 2) && index != ths.length - (ths.length - 3) && index != 0 && index != ths.length - (ths.length - 4)) {
                 let rows = table.rows;
                 let dynamicData = [], dates = [];
                 let date;
                 for (let j = 1; j < rows.length; j++) {
                     dynamicData.push(parseInt(rows[j].cells[index].innerText));
-                    date = rows[j].cells[ths.length - 2].innerText.split(/-/g);
+                    if (table.classList.contains('analysis')) {
+                        date = rows[j].cells[ths.length - 1].innerText.split(/-/g);
+                    }
+                    else {
+                        date = rows[j].cells[ths.length - 2].innerText.split(/-/g);
+                    }
                     dates.push(new Date(date[2], date[1], date[0]));
                     rows[j].cells[index].style.backgroundColor = 'lightgray';
                 }

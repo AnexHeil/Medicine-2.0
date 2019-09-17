@@ -24,6 +24,18 @@ require('../models/ShG');
 const ShG = mongoose.model('shGResearches');
 require('../models/Spyro');
 const Spyro = mongoose.model('spyroResearches');
+require('../models/AntrMorphCalc');
+const AntrMorphCalc = mongoose.model('antrMorphCalcs');
+require('../models/ECGCalcs');
+const ECGCalcs = mongoose.model('ecgCalcs');
+require('../models/OPCalcs');
+const OPCalcs = mongoose.model('opCalcs');
+require('../models/PRCalcs');
+const PRCalcs = mongoose.model('prCalcs');
+require('../models/ShGCalcs');
+const ShGcalcs = mongoose.model('shgCalcs');
+require('../models/SpyroCalcs');
+const SpyroCalc = mongoose.model('spyroCalcs');
 
 router.get('/', ensureAuthenticated, ensureUser, (req, res) => {
     Student.find()
@@ -183,9 +195,9 @@ router.post('/import', ensureAuthenticated, (req, res) => {
 });
 
 router.get('/:id/report', ensureAuthenticated, ensureUser, (req, res) => {
-    res.render('students/report', {id: req.params.id});
+    res.render('students/report', { id: req.params.id });
 });
-router.get('/:id/report/:research', ensureAuthenticated, ensureUser, (req, res) =>{
+router.get('/:id/report/:research', ensureAuthenticated, ensureUser, (req, res) => {
     let Model;
     switch (req.params.research) {
         case 'antropology':
@@ -209,18 +221,60 @@ router.get('/:id/report/:research', ensureAuthenticated, ensureUser, (req, res) 
         case 'op':
             Model = OP;
             break;
+        case 'antrmorph analysis':
+            Model = AntrMorphCalc;
+            break;
+        case 'spyro analysis':
+            Model = SpyroCalc;
+            break;
+        case 'ecg analysis':
+            Model = ECGCalcs;
+            break;
+        case 'shg analysis':
+            Model = ShGcalcs;
+            break;
+        case 'pr analysis':
+            Model = PRCalcs;
+            break;
+        case 'op analysis':
+            Model = OPCalcs;
+            break;
     };
-    Model.find({student: req.params.id})
-        .populate('student')
-        .then(researches =>{
-            if(researches.length > 0){
-                res.render(`researches/${req.params.research}/index`, {researches: researches, id: req.params.id, report: true, selected: req.params.research});
-            }
-            else{
-                req.flash('error_msg', 'Для указанного студента данне обследований отстутствуют.');
-                res.redirect(`/students/${req.params.id}/report`)
-            }
-        });
+    if (req.params.research.indexOf('analysis') != -1) {
+        let link = req.params.research.split(' ')[0];
+        Model.find()
+            .populate({
+                path: 'research',
+                populate: { path: 'student' }
+            })
+            .then(analysis => {
+                let result = [];
+                analysis.forEach(data =>{
+                    if(" " + data.research.student._id == " " + req.params.id)
+                        result.push(data);
+                })
+                if (result.length > 0) {
+                    res.render(`analysis/${link}Index`, { data: result, id: req.params.id, report: true, selected: req.params.research });
+                }
+                else {
+                    req.flash('error_msg', 'Для указанного студента данне обследований отстутствуют.');
+                    res.redirect(`/students/${req.params.id}/report`)
+                }
+            });
+    }
+    else {
+        Model.find({ student: req.params.id })
+            .populate('student')
+            .then(researches => {
+                if (researches.length > 0) {
+                    res.render(`researches/${req.params.research}/index`, { researches: researches, id: req.params.id, report: true, selected: req.params.research });
+                }
+                else {
+                    req.flash('error_msg', 'Для указанного студента данне обследований отстутствуют.');
+                    res.redirect(`/students/${req.params.id}/report`)
+                }
+            });
+    }
 });
 
 router.delete('/:id', ensureAuthenticated, ensureUser, (req, res) => {
@@ -234,5 +288,8 @@ router.delete('/:id', ensureAuthenticated, ensureUser, (req, res) => {
             res.redirect('/students');
         });
 });
+function formResult(analysis, id) {
+    let length = analysis.length;
 
+}
 module.exports = router;
